@@ -8,11 +8,11 @@ class News_model extends CI_Model {
 
    public function get_news($slug = FALSE) {
         if ($slug === FALSE) {
-                $query = $this->db->get('news');
+                $query = $this->db->get('Post');
                 return $query->result_array();
         }
 
-        $query = $this->db->get_where('news', array('slug' => $slug));
+        $query = $this->db->get_where('Post', array('slug' => $slug));
 
         return $query->row_array();
    }
@@ -28,7 +28,7 @@ class News_model extends CI_Model {
         'text' => $this->input->post('text')
     );
 
-    return $this->db->insert('news', $data);
+    return $this->db->insert('Post', $data);
  }
 
 
