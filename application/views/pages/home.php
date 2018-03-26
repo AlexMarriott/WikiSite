@@ -10,52 +10,25 @@
                 <small>Secondary Text</small>
             </h1>
 
-            <?php echo "
+            <?php foreach ($results as $data):?>
+
             <!-- Blog Post -->
             <div class='card mb-4'>
                 <img class='card-img-top' src='http://placehold.it/750x300' alt='Card image cap'>
                 <div class='card-body'>
-                    <h2 class='card-title'>Post Title</h2>
-                    <p class='card-text'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                    <a href='#' class='btn btn-primary'>Read More &rarr;</a>
+                    <h2 class='card-title'><?php echo $data->post_title; ?></h2>
+                    <p class='card-text'><?php echo $data->post_body;?></p>
+                    <a href="<?php echo site_url('posts/'.$data->post_title);?>" class='btn btn-primary'>Read More &rarr;</a>
                 </div>
                 <div class='card-footer text-muted'>
-            Posted on January 1, 2017 by
-            <a href=''#'>Start Bootstrap</a>
-                </div>
-            </div>"
-            ?>
-
-
-            <!-- Blog Post -->
-            <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-                <div class="card-body">
-                    <h2 class="card-title">Post Title</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                    <a href="#" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posted on January 1, 2017 by
-                    <a href="#">Start Bootstrap</a>
+            <?php echo $data->post_date;?>
+            <a href='<?php //TODO create a user controller
+             echo site_url('user/'.$data->user_id_FK);?>'>user</a>
                 </div>
             </div>
+            <?php endforeach; ?>
 
-            <!-- Blog Post -->
-            <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-                <div class="card-body">
-                    <h2 class="card-title">Post Title</h2>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                    <a href="#" class="btn btn-primary">Read More &rarr;</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posted on January 1, 2017 by
-                    <a href="#">Start Bootstrap</a>
-                </div>
-            </div>
-
-            <!-- Pagination -->
+            <!-- Pagination
             <ul class="pagination justify-content-center mb-4">
                 <li class="page-item">
                     <a class="page-link" href="#">&larr; Older</a>
@@ -63,6 +36,12 @@
                 <li class="page-item disabled">
                     <a class="page-link" href="#">Newer &rarr;</a>
                 </li>
+            </ul> -->
+
+            <!-- Pagination Numbers -->
+            <ul class="pagination justify-content-center mb-4">
+                <!-- Show pagination links -->
+                <p><?php echo $links; ?></p>
             </ul>
 
         </div>

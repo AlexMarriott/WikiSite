@@ -21,8 +21,10 @@ CONSTRAINT category_id_PK PRIMARY KEY (category_id));
 CREATE TABLE sub_categories
 (subcategory_id BIGINT(20) NOT NULL AUTO_INCREMENT,
 subcategory_name VARCHAR(100) NOT NULL,
+category_id_FK BIGINT(20) NOT NULL,
 CONSTRAINT sub_categories_entree UNIQUE (subcategory_id,subcategory_name),
-CONSTRAINT subcategory_id_PK PRIMARY KEY (subcategory_id));
+CONSTRAINT subcategory_id_PK PRIMARY KEY (subcategory_id),
+CONSTRAINT category_id_FK FOREIGN KEY (category_id_FK) REFERENCES categories(category_id));
 
 CREATE TABLE ratings
 (ratings_id BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -42,10 +44,11 @@ CREATE TABLE post
 post_title VARCHAR(100) NOT NULL,
 post_body VARCHAR(256) NOT NULL,
 post_date DATE NOT NULL,
-website_user_id_FK BIGINT(20) NOT NULL,
+user_id_FK BIGINT(20) NOT NULL,
 rating_id_FK BIGINT(20) NOT NULL,
 CONSTRAINT post_id_PK PRIMARY KEY (post_id),
-CONSTRAINT website_user_id_FK FOREIGN KEY (website_user_id_FK) REFERENCES user(user_id) ON DELETE CASCADE ON UPDATE CASCADE);
+CONSTRAINT user_id_FK FOREIGN KEY (user_id_FK) REFERENCES user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT rating_id_FK FOREIGN KEY (rating_id_FK) REFERENCES ratings(ratings_id) ON DELETE CASCADE ON UPDATE CASCADE);
 
 CREATE TABLE post_comment_link
 (post_id_link BIGINT(20) NOT NULL,
@@ -53,13 +56,6 @@ comment_id_link BIGINT(20) NOT NULL,
 CONSTRAINT post_comment_link_PK PRIMARY KEY (post_id_link,comment_id_link),
 CONSTRAINT post_id_link_FK FOREIGN KEY (post_id_link) REFERENCES post(post_id),
 CONSTRAINT comment_id_link_FK FOREIGN KEY (comment_id_link) REFERENCES comments(comments_id));
-
-CREATE TABLE cat_subcat_link
-(category_id_link BIGINT(20) NOT NULL,
-subcategory_id_link BIGINT(20) NOT NULL,
-CONSTRAINT category_id_link_PK PRIMARY KEY (category_id_link,subcategory_id_link),
-CONSTRAINT category_id_link_FK FOREIGN KEY (category_id_link) REFERENCES categories (category_id),
-CONSTRAINT subcategory_id_link_FK FOREIGN KEY (subcategory_id_link) REFERENCES sub_categories (subcategory_id));
 
 CREATE TABLE rating_comment_link
 (rating_id_link BIGINT(20) NOT NULL,
