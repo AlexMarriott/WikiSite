@@ -15,6 +15,8 @@ class Search extends CI_Controller{
         $this->load->model('search_model');
     }
 
+    function
+
 
 
 }
