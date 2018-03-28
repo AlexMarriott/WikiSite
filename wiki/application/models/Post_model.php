@@ -17,41 +17,39 @@ class Post_model extends CI_Model {
        if ($slug === FALSE){
            return null;
        }
-       $query = $this->db->get_where('posts',array('post_title'=> $slug));
+
+       $this->db->select('*');
+       $this->db->from('posts');
+       $this->db->join('users', 'users.user_id = posts.user_id_FK');
+       $this->db->join('comments','comments.post_id_FK = posts.post_id');
+       $this->db->join('ratings','ratings.rating_id = posts.rating_id_FK');
+       $this->db->where('post_title', $slug);
+
+       $query = $this->db->get();
+
+       // WHERE name = 'Joe'
+       // $this->db->where('name', $name);
+
+       // SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
+       // $this->db->join('comments', 'comments.id = blogs.id');
+
+       //select * from blah
+       //$sql = $this->db->get_compiled_select('mytable');
+
+
+       /*
+        * SELECT * from posts
+        JOIN users ON users.user_id = posts.user_id_FK
+        JOIN comments ON comments.post_id_FK = posts.post_id
+        WHERE post_title = 'how-to-fix';
+        */
+
+      // $query = $this->db->get_where('posts',array('post_title'=> $slug));
        return $query->row_array();
    }
 
-    //TODO might be able to better optermise this block of code.
-    public function get_post_user($slug){
-       if ($slug === FALSE){
-           return null;
-       }
-       $query = $this->db->get_where('posts',array('post_title'=> $slug));
-       $query2 = $query -> row_array();
-       $query3 = $this->db->get_where('users',array('user_id'=> $query2['user_id_FK']));
-
-       return $query3 -> row_array();
-   }
-
-    //TODO might be able to better optimise this block of code.
-    public function get_post_rating($slug){
-        if ($slug === FALSE){
-            return null;
-        }
-        $query = $this->db->get_where('posts',array('post_title'=> $slug));
-        $query2 = $query -> row_array();
-        $query3 = $this->db->get_where('ratings',array('ratings_id'=> $query2['rating_id_FK']));
-
-        return $query3 -> row_array();
-    }
-
-    public function get_post_comments($slug){
-        if ($slug === FALSE){
-            return null;
-        }
-
-        $query = $this->db->sele//$this->db->get_where('comments',array('post_title'=> $slug));
-        return $query->row_array();
+    public function comment_count() {
+        return $this->db->count_all("comments");
     }
 
  public function set_posts() {

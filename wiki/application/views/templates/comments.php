@@ -1,9 +1,11 @@
-<?php foreach ($posts as $post_item): ?>
+<?php
+foreach ( $post_item as $count): ?>
 
-    <h3><?php echo $post_item['title']; ?></h3>
+    <h3><?php echo $post_item['username']; ?></h3>
     <div class="main">
-        <?php echo $post_item['text']; ?>
+        <?php echo $post_item['comment']; ?>
     </div>
-    <p><a href="<?php echo site_url('posts/'.$post_item['slug']); ?>">View article</a></p>
+    <?php echo $post_item['comment_date']; ?>
+
 
 <?php endforeach; ?>
