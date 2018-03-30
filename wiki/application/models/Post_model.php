@@ -26,25 +26,6 @@ class Post_model extends CI_Model {
        $this->db->where('post_title', $slug);
 
        $query = $this->db->get();
-
-       // WHERE name = 'Joe'
-       // $this->db->where('name', $name);
-
-       // SELECT * FROM blogs JOIN comments ON comments.id = blogs.id
-       // $this->db->join('comments', 'comments.id = blogs.id');
-
-       //select * from blah
-       //$sql = $this->db->get_compiled_select('mytable');
-
-
-       /*
-        * SELECT * from posts
-        JOIN users ON users.user_id = posts.user_id_FK
-        JOIN comments ON comments.post_id_FK = posts.post_id
-        WHERE post_title = 'how-to-fix';
-        */
-
-      // $query = $this->db->get_where('posts',array('post_title'=> $slug));
        return $query->row_array();
    }
 
@@ -52,25 +33,32 @@ class Post_model extends CI_Model {
         return $this->db->count_all("comments");
     }
 
- public function set_posts() {
+ public function create_posts() {
     $this->load->helper('url');
-    $slug = url_title($this->input->post('post_title'), 'dash', TRUE);
+    $slug = url_title($this->input->post('title'));
 
     $data = array(
-        'post_title' => $this->input->post('post_title'),
+        'post_title' => $this->input->post('title'),
         'slug' => $slug,
-        'text' => $this->input->post('post_body')
+        'post_body' => $this->input->post('body'),
+        'post_date' => date('y-m-d'),
+        //'sub_categories_FK' => $this->input->post('subcategory'),
+        //Default variables done for testing purposes
+        //TODO configure this to allow for the real values to be pulled from sessions etc
+        'user_id_FK' => 1,
+        'rating_id_FK' => 1,
+        'sub_categories_FK' => 1
     );
+    var_dump($data);
 
-
-
-    return $this->db->insert('post_id', $data);
+    return $this->db->insert('posts', $data);
  }
 
  // Pagination_Section TODO edit.
     public function record_count() {
         return $this->db->count_all("posts");
     }
+
 // Fetch data according to per_page limit.
 ////https://www.sitepoint.com/pagination-with-codeigniter/
     public function fetch_data($limit, $start) {
