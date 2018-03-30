@@ -62,6 +62,7 @@
                 </div>
             </div>
 
+
             <!-- Categories Widget -->
             <div class="card my-4">
                 <h5 class="card-header">Categories</h5>
@@ -112,3 +113,14 @@
 
 </div>
 <!-- /.container -->
+
+
+</head>
+<body>
+<div id="container">
+    <p>Note:- Please start typing surname as "Chavan", "Patil"</p>
+    <input type="text" name="search" id="search" />
+    <ul id="finalResult"></ul>
+</div>
+</body>
+</html>
