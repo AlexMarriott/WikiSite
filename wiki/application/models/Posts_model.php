@@ -1,40 +1,49 @@
 <?php
-class Posts_model extends CI_Model {
 
-   public function __construct() {
-	$this->load->database();
-   }
+class Posts_model extends CI_Model
+{
+
+    public function __construct()
+    {
+        $this->load->database();
+    }
 
 
-    public function get_all_posts() {
+    public function get_all_posts()
+    {
         $query = $this->db->get('posts');
         return $query->result_array();
     }
 
-    public function get_post($slug){
-        if ($slug === FALSE){
+    public function get_post($slug)
+    {
+        if ($slug === FALSE) {
             return null;
         }
         $this->db->select('*');
         $this->db->from('posts');
         $this->db->join('users', 'users.user_id = posts.user_id_FK');
-        $this->db->join('comments','comments.post_id_FK = posts.post_id');
-        $this->db->join('ratings','ratings.rating_id = posts.rating_id_FK');
+        $this->db->join('comments', 'comments.post_id_FK = posts.post_id');
+        $this->db->join('ratings', 'ratings.rating_id = posts.rating_id_FK');
         $this->db->where('post_id', $slug);
 
         $query = $this->db->get();
         return $query->row_array();
     }
 
-    public function comment_count() {
+    public function comment_count()
+    {
         return $this->db->count_all("comments");
     }
 
-    public function create_post() {
+    public function create_post()
+    {
         $this->load->helper('url');
+        $slug = url_title($this->input->post('title'));
 
         $data = array(
             'post_title' => $this->input->post('title'),
+            'slug' =>$slug,
             'post_body' => $this->input->post('body'),
             'post_date' => date('20y-m-d'),
             //'sub_categories_FK' => $this->input->post('subcategory'),
@@ -48,14 +57,23 @@ class Posts_model extends CI_Model {
         return $this->db->insert('posts', $data);
     }
 
+    public function delete_post($post_id){
+        $this->db->where('post_id', $post_id);
+        $this->db->delete('posts');
+        return true;
+    }
+
+
     // Pagination_Section TODO edit.
-    public function record_count() {
+    public function record_count()
+    {
         return $this->db->count_all("posts");
     }
 
-// Fetch data according to per_page limit.
-////https://www.sitepoint.com/pagination-with-codeigniter/
-    public function fetch_data($limit, $start) {
+    //Fetch data according to per_page limit.
+    //https://www.sitepoint.com/pagination-with-codeigniter/
+    public function fetch_data($limit, $start)
+    {
         $this->db->limit($limit, $start);
         $query = $this->db->get("posts");
 
@@ -67,7 +85,6 @@ class Posts_model extends CI_Model {
         }
         return false;
     }
-
 
 
 }
