@@ -57,11 +57,8 @@ p {
 </head>
 <body>
 	<div id="container">
-		<h1><?php echo  $heading; ?></h1>
-		<?php echo $message;
-		echo error_reporting(E_ALL);
-        ini_set('display_errors', 4);
-        ?>
+		<h1><?php echo $heading; ?></h1>
+		<?php echo $message; ?>
 	</div>
 </body>
 </html>
