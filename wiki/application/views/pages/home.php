@@ -18,12 +18,12 @@
                 <div class='card-body'>
                     <h2 class='card-title'><?php echo $data->post_title; ?></h2>
                     <p class='card-text'><?php echo $data->post_body;?></p>
-                    <a href="<?php echo site_url('posts/view/'.$data->post_title);?>" class='btn btn-primary'>Read More &rarr;</a>
+                    <a href="<?php echo 'http://student30371.bucomputing.uk/wiki/posts/view/'.$data->slug;?>" class='btn btn-primary'>Read More &rarr;</a>
                 </div>
                 <div class='card-footer text-muted'>
             <?php echo $data->post_date;?>
-            <a href='<?php //TODO create a user controller
-             echo site_url('user/'.$data->user_id_FK);?>'>user</a>
+            <a href="<?php //TODO create a user controller and pass the username not the user id.
+             echo 'http://student30371.bucomputing.uk/wiki/user/'.$data->user_id_FK;?>">user</a>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -61,6 +61,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- Categories Widget -->
             <div class="card my-4">
@@ -112,3 +113,14 @@
 
 </div>
 <!-- /.container -->
+
+
+</head>
+<body>
+<div id="container">
+    <p>Note:- Please start typing surname as "Chavan", "Patil"</p>
+    <input type="text" name="search" id="search" />
+    <ul id="finalResult"></ul>
+</div>
+</body>
+</html>

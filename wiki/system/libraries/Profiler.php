@@ -63,7 +63,7 @@ class CI_Profiler {
 		'benchmarks',
 		'get',
 		'memory_usage',
-        'Posts',
+		'post',
 		'uri_string',
 		'controller_info',
 		'queries',

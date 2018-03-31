@@ -5,10 +5,11 @@
     </div>
     <!-- /.container -->
 </footer>
-
+    <!-- Replaces the textarea by using the id-->
+    <script>CKEDITOR.replace('body');</script>
 <!-- Bootstrap core JavaScript -->
-    <script src="/css/bootstrap/js/jquery.min.js"></script>
-    <script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/wiki/css/bootstrap/js/jquery.min.js"></script>
+    <script src="/wiki/css/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
