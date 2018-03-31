@@ -16,7 +16,7 @@ class Pages extends CI_Controller {
 
         //Setting up pagnation
        $config = array();
-       $config["base_url"] = base_url() . "/index";
+       $config["base_url"] = base_url() . "";
        $config["total_rows"] = $this->post_model->record_count();
        $config["per_page"] = 5;
        $config["uri_segment"] = 3;

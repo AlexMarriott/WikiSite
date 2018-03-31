@@ -23,7 +23,7 @@ class Post_model extends CI_Model {
        $this->db->join('users', 'users.user_id = posts.user_id_FK');
        $this->db->join('comments','comments.post_id_FK = posts.post_id');
        $this->db->join('ratings','ratings.rating_id = posts.rating_id_FK');
-       $this->db->where('post_title', $slug);
+       $this->db->where('post_id', $slug);
 
        $query = $this->db->get();
        return $query->row_array();
@@ -33,7 +33,7 @@ class Post_model extends CI_Model {
         return $this->db->count_all("comments");
     }
 
- public function create_posts() {
+ public function create_post() {
     $this->load->helper('url');
     $slug = url_title($this->input->post('title'));
 

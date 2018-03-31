@@ -18,7 +18,7 @@
                 <div class='card-body'>
                     <h2 class='card-title'><?php echo $data->post_title; ?></h2>
                     <p class='card-text'><?php echo $data->post_body;?></p>
-                    <a href="<?php echo site_url('posts/view/'.$data->post_title);?>" class='btn btn-primary'>Read More &rarr;</a>
+                    <a href="<?php echo site_url('posts/view/'.$data->post_id);?>" class='btn btn-primary'>Read More &rarr;</a>
                 </div>
                 <div class='card-footer text-muted'>
             <?php echo $data->post_date;?>
