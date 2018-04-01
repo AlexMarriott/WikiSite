@@ -1,7 +1,6 @@
-<?php /*if (isset($error)) {
+<?php if (isset($error)) {
 echo '<div class="alert alert-danger" role="alert">' . var_dump($error). '</div>';
-}*/?>
-
+}?>
 <?php echo validation_errors(); ?>
 <?php echo form_open_multipart('posts/create'); ?>
 <?php echo '<h2>'.$title.'</h2>'; ?>

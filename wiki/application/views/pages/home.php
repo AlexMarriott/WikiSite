@@ -8,8 +8,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Page Heading
-                <small>Secondary Text</small>
+            <h1 class="my-4">Wiki N Stuff Knowledge Base.
             </h1>
 
             <?php foreach ($posts as $data):?>

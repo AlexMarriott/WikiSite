@@ -45,11 +45,11 @@ class Posts extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             //Image upload.
-            $config['upload_directory'] = 'wiki/assets/images/posts';
+            $config['upload_path'] = './assets/images/posts';
             $config['allowed_types'] = 'png|jpg';
             $config['max_size'] = '2048';
-            $config['max_width'] = '750';
-            $config['max_height'] = '300';
+            $config['max_width'] = '1024';
+            $config['max_height'] = '768';
 
             $this->upload->initialize($config);
 
