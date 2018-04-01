@@ -1,8 +1,9 @@
-<?php if (isset($error)) {
-echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
-}?>
+<?php /*if (isset($error)) {
+echo '<div class="alert alert-danger" role="alert">' . var_dump($error). '</div>';
+}*/?>
+
 <?php echo validation_errors(); ?>
-<?php echo form_open('posts/create'); ?>
+<?php echo form_open_multipart('posts/create'); ?>
 <?php echo '<h2>'.$title.'</h2>'; ?>
 
 <div class="form-group">
@@ -13,11 +14,6 @@ echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
     <label for="body">Post Text</label>
     <textarea class="form-control" id="body" name="body" rows="'30"></textarea>
 </div>
-<!--<div class="form-group">
-    <label for="picture-upload">File input</label>
-    <input type="file" id="picture-upload">
-    <p class="help-block">Upload an image for your post</p>
-</div>-->
 <div class="form-group">
     <label for="sel1">Select a Subcategory:</label>
     <select class="form-control" id="subcategory" name="subcategory">
@@ -36,5 +32,12 @@ echo '<div class="alert alert-danger" role="alert">' . $error . '</div>';
         <?php endforeach; ?>
     </select>
 </div>
+
+<div class="form-group">
+    <label for="picture-upload">File input</label>
+    <p class="help-block">Upload an image for your post!</p>
+    <input type="file" id="picture-upload" name="userfile" size="20">
+</div>
+
 <button type="submit" class="btn btn-default">Submit</button>
 </form>

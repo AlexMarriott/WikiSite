@@ -14,10 +14,10 @@
     <title>Wiki N Stuff</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/wiki/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/wiki/assets/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/wiki/css/blog-home.css" rel="stylesheet">
+    <link href="/wiki/assets/css/blog-home.css" rel="stylesheet">
 
     <!-- ckeditor for the blog creation pages-->
     <script src="http://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>

@@ -12,6 +12,7 @@ class Post_model extends CI_Model
     {
         if ($slug === FALSE) {
             $this->db->order_by('post_id','DESC');
+            $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
             $query = $this->db->get('posts');
             //var_dump($query);
             return $query->result_array();
@@ -31,7 +32,7 @@ class Post_model extends CI_Model
         return $this->db->count_all("comments");
     }
 
-    public function create_post()
+    public function create_post($post_image)
     {
         $this->load->helper('url');
         $slug = url_title($this->input->post('title'), 'dash', true);
@@ -44,6 +45,7 @@ class Post_model extends CI_Model
             'post_title' => $this->input->post('title'),
             'slug' =>$slug,
             'post_body' => $this->input->post('body'),
+            'post_image' => $post_image,
             //'post_date' => date('20y-m-d'),
             'sub_categories_FK' => $this->input->post('subcategory'),
             //Default variables done for testing purposes
@@ -68,7 +70,7 @@ class Post_model extends CI_Model
             'post_title' => $this->input->post('title'),
             'slug' => $slug,
             'post_body' => $this->input->post('body'),
-            'sub_categories_FK' => $this->input->post('sub_category_id')
+            'sub_categories_FK' => $this->input->post('subcategory')
         );
         $this->db->where('post_id', $this->input->post('id'));
         return $this->db->update('posts', $data);
