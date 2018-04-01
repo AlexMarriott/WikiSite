@@ -11,8 +11,9 @@ class Post_model extends CI_Model
     public function get_post($slug = FALSE)
     {
         if ($slug === FALSE) {
-            $query = $this->db->get('posts');
             $this->db->order_by('post_id','DESC');
+            $query = $this->db->get('posts');
+            //var_dump($query);
             return $query->result_array();
         }
         $this->db->select('*');
@@ -44,12 +45,12 @@ class Post_model extends CI_Model
             'slug' =>$slug,
             'post_body' => $this->input->post('body'),
             //'post_date' => date('20y-m-d'),
-            //'sub_categories_FK' => $this->input->post('subcategory'),
+            'sub_categories_FK' => $this->input->post('subcategory'),
             //Default variables done for testing purposes
             //TODO configure this to allow for the real values to be pulled from sessions etc
             'user_id_FK' => 1,
             'rating_id_FK' => 1,
-            'sub_categories_FK' => 1
+            //'sub_categories_FK' => 1
         );
 
         return $this->db->insert('posts', $data);
@@ -66,7 +67,8 @@ class Post_model extends CI_Model
         $data = array(
             'post_title' => $this->input->post('title'),
             'slug' => $slug,
-            'post_body' => $this->input->post('body')
+            'post_body' => $this->input->post('body'),
+            'sub_categories_FK' => $this->input->post('sub_category_id')
         );
         $this->db->where('post_id', $this->input->post('id'));
         return $this->db->update('posts', $data);
