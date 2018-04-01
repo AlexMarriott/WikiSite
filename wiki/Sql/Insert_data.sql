@@ -35,8 +35,8 @@ INSERT INTO ratings (rating_score) VALUES (8);
 INSERT INTO ratings (rating_score) VALUES (9);
 INSERT INTO ratings (rating_score) VALUES (10);
 
-INSERT INTO posts(post_title,slug,post_body,post_date,user_id_FK,rating_id_FK,sub_categories_FK) VALUES ("how to fix","how-to-fix","stuff about the postshere", "2016-05-21",1,1,1);
-INSERT INTO posts(post_title,slug,post_body,post_date,user_id_FK,rating_id_FK,sub_categories_FK) VALUES ("how to fix again","how-to-fix-again","stuff about the postshere", "2016-05-21",1,1,1);
+INSERT INTO posts(post_title,slug,post_body,user_id_FK,rating_id_FK,sub_categories_FK) VALUES ("how to fix","how-to-fix","stuff about the postshere",1,1,1);
+INSERT INTO posts(post_title,slug,post_body,user_id_FK,rating_id_FK,sub_categories_FK) VALUES ("how to fix again","how-to-fix-again","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿", 1,1,1);
 
 
 

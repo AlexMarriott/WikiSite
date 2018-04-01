@@ -1,13 +1,14 @@
 
 <?php echo validation_errors(); ?>
-<?php echo form_open('posts/create'); ?>
+<?php echo form_open('posts/update'); ?>
+<input type="hidden" name="id" value="<?php echo $post_item['post_id']; ?>">
 <div class="form-group">
     <label for="title">Post Title</label>
-    <input type="text" class="form-control" id="title" name="title">
+    <input type="text" class="form-control" id="title" name="title" placeholder="Add Title" value="<?php echo $post_item['post_title']; ?>">
 </div>
 <div class="form-group">
     <label for="body">Post Text</label>
-    <textarea class="form-control" id="body" name="body" rows="'30"></textarea>
+    <textarea class="form-control" id="body" name="body" rows="'30" placeholder="Add Title" value="<?php echo $post_item['post_body']; ?>"></textarea>
 </div>
 <!--<div class="form-group">
     <label for="picture-upload">File input</label>

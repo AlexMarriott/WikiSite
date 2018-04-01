@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
-
+    <?php if (isset($_SESSION['success'])) {
+        echo '<div class="alert alert-success" role="alert">' . $_SESSION['success'] . '</div>';
+    }?>
+    <?php //echo var_dump($this->session->flashdata('success'));?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Wiki N Stuff</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/wiki/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">

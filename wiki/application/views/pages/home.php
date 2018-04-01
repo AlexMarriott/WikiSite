@@ -1,3 +1,5 @@
+
+
 <!-- Page Content -->
 <div class="container">
 
@@ -17,8 +19,8 @@
                 <img class='card-img-top' src='http://placehold.it/750x300' alt='Card image cap'>
                 <div class='card-body'>
                     <h2 class='card-title'><?php echo $data->post_title; ?></h2>
-                    <p class='card-text'><?php echo $data->post_body;?></p>
-                    <a href="<?php echo site_url('posts/view/'.$data->post_id);?>" class='btn btn-primary'>Read More &rarr;</a>
+                    <p class='card-text'><?php echo word_limiter($data->post_body, 25);?></p>
+                    <a href="<?php echo site_url('posts/view/'.$data->slug);?>" class='btn btn-primary'>Read More &rarr;</a>
                 </div>
                 <div class='card-footer text-muted'>
             <?php echo $data->post_date;?>

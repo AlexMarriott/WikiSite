@@ -1,6 +1,6 @@
 <?php
 
-class Posts_model extends CI_Model
+class Post_model extends CI_Model
 {
 
     public function __construct()
@@ -35,11 +35,15 @@ class Posts_model extends CI_Model
         $this->load->helper('url');
         $slug = url_title($this->input->post('title'), 'dash', true);
 
+        if ($this->get_post($slug)){
+            return FALSE;
+        }
+
         $data = array(
             'post_title' => $this->input->post('title'),
             'slug' =>$slug,
             'post_body' => $this->input->post('body'),
-            'post_date' => date('20y-m-d'),
+            //'post_date' => date('20y-m-d'),
             //'sub_categories_FK' => $this->input->post('subcategory'),
             //Default variables done for testing purposes
             //TODO configure this to allow for the real values to be pulled from sessions etc
@@ -67,6 +71,17 @@ class Posts_model extends CI_Model
         $this->db->where('post_id', $this->input->post('id'));
         return $this->db->update('posts', $data);
 
+    }
+
+    public function get_sub_categories(){
+        $this->db->order_by('sub_category_name');
+        $uqery = $this->db->get('sub_categories');
+        return $uqery->result_array();
+    }
+    public function get_categories(){
+        $this->db->order_by('category_name');
+        $uqery = $this->db->get('categories');
+        return $uqery->result_array();
     }
 
 
