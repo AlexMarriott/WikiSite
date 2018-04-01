@@ -30,7 +30,7 @@ class Pages extends CI_Controller {
         $data["links"] = $this->pagination->create_links();
 
         //$data['title'] = ucfirst($page); // Capitalize the first letter
-        $data['posts'] = $this->posts_model->get_all_posts();
+        $data['posts'] = $this->posts_model->get_post();
 
         $this->load->view('templates/header', $data);
         $this->load->view('pages/'.$web_page, $data);

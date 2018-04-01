@@ -35,8 +35,6 @@ class Posts extends CI_Controller
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('body', 'Body', 'required');
 
-        var_dump($this->form_validation->has_rule('title', 'Title', 'required'));
-        var_dump($this->form_validation->has_rule('body', 'Body', 'required'));
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('posts/create');
@@ -58,7 +56,7 @@ class Posts extends CI_Controller
     }
 
     public function edit($slug){
-        $data['post_item'] = $this->posts_model->get_post($slug);
+        $data['post_item'] = $this->posts_model->get_posts($slug);
 
         if (empty($data['post_item']) || $data['post_item'] == null) {
             show_404();

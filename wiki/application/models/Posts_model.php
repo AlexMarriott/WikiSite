@@ -8,24 +8,18 @@ class Posts_model extends CI_Model
         $this->load->database();
     }
 
-
-    public function get_all_posts()
-    {
-        $query = $this->db->get('posts');
-        return $query->result_array();
-    }
-
-    public function get_post($slug)
+    public function get_post($slug = FALSE)
     {
         if ($slug === FALSE) {
-            return null;
+            $query = $this->db->get('posts');
+            $this->db->order_by('post_id','DESC');
+            return $query->result_array();
         }
         $this->db->select('*');
         $this->db->from('posts');
         $this->db->join('users', 'users.user_id = posts.user_id_FK');
-        $this->db->join('comments', 'comments.post_id_FK = posts.post_id');
         $this->db->join('ratings', 'ratings.rating_id = posts.rating_id_FK');
-        $this->db->where('post_id', $slug);
+        $this->db->where('slug', $slug);
 
         $query = $this->db->get();
         return $query->row_array();
@@ -39,7 +33,7 @@ class Posts_model extends CI_Model
     public function create_post()
     {
         $this->load->helper('url');
-        $slug = url_title($this->input->post('title'));
+        $slug = url_title($this->input->post('title'), 'dash', true);
 
         $data = array(
             'post_title' => $this->input->post('title'),
@@ -61,6 +55,18 @@ class Posts_model extends CI_Model
         $this->db->where('post_id', $post_id);
         $this->db->delete('posts');
         return true;
+    }
+    public function update_post(){
+        $slug = url_title($this->input->post('title'), 'dash', true);
+
+        $data = array(
+            'post_title' => $this->input->post('title'),
+            'slug' => $slug,
+            'post_body' => $this->input->post('body')
+        );
+        $this->db->where('post_id', $this->input->post('id'));
+        return $this->db->update('posts', $data);
+
     }
 
 
