@@ -8,9 +8,8 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Wiki N Stuff Knowledge Base.
-            </h1>
-
+            <h1 class="my-4">Wiki N Stuff Knowledge Base.</h1>
+            <?php echo '<h2>'. $title . '</h2>'?>
             <?php foreach ($posts as $data):?>
             <!-- Blog Post -->
             <div class='card mb-4'>
@@ -42,7 +41,7 @@
             <!-- Pagination Numbers -->
             <ul class="pagination justify-content-center mb-4">
                 <!-- Show pagination links -->
-                <p><?php echo $links; ?></p>
+                <?php echo '<p>' . $links . '</p>' ?>
             </ul>
 
         </div>
@@ -95,13 +94,18 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                        <div class="col-lg-6">
+                            <div class="align-self-end">
+                                <strong><a href="http://student30371.bucomputing.uk/wiki/categories">View More...</a></strong>
+                            </div>
+                </div>
+            </div>
                 </div>
             </div>
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
+                <h5 class="card-header">User account view</h5>
                 <div class="card-body">
                     You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
                 </div>

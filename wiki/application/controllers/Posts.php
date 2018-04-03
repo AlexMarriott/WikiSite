@@ -6,6 +6,7 @@ class Posts extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        //TODO, check to see if these can be autoloaded rather than loaded each time the file is called.
         $this->load->model('Post_model');
         $this->load->helper('url_helper');
         $this->load->library('session','upload');
@@ -15,6 +16,9 @@ class Posts extends CI_Controller
     public function view($slug = NULL)
     {
         $data['post_item'] = $this->Post_model->get_post($slug);
+        $post_id = $data['post_item']['post_id'];
+        $data['comments'] = $this->Comment_model->get_comments($post_id);
+
         $data['count'] = $this->Post_model->comment_count();
 
         if (empty($data['post_item']) || $data['post_item'] == null) {
@@ -22,7 +26,6 @@ class Posts extends CI_Controller
         }
         $this->load->view('templates/header', $data);
         $this->load->view('posts/view', $data);
-        $this->load->view('templates/comments', $data);
         $this->load->view('templates/footer');
     }
 
@@ -50,6 +53,7 @@ class Posts extends CI_Controller
             $config['max_size'] = '2048';
             $config['max_width'] = '1024';
             $config['max_height'] = '768';
+
 
             $this->upload->initialize($config);
 

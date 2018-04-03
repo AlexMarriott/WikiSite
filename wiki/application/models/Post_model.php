@@ -27,9 +27,24 @@ class Post_model extends CI_Model
         return $query->row_array();
     }
 
-    public function comment_count()
-    {
-        return $this->db->count_all("comments");
+    public function get_posts_by_sub_category($sub_category_id){
+        $this->db->order_by('post_id', 'DESC');
+        $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
+        $this->db->join('categories', 'categories.category_id = sub_categories.category_id_FK');
+        $query = $this->db->get_where('posts', array('sub_category_id' => $sub_category_id));
+        return $query->result_array();
+
+    }
+
+    public function get_sub_categories(){
+        $this->db->order_by('sub_category_name');
+        $uqery = $this->db->get('sub_categories');
+        return $uqery->result_array();
+    }
+    public function get_categories(){
+        $this->db->order_by('category_name');
+        $query = $this->db->get('categories');
+        return $query->result_array();
     }
 
     public function create_post($post_image)
@@ -77,15 +92,9 @@ class Post_model extends CI_Model
 
     }
 
-    public function get_sub_categories(){
-        $this->db->order_by('sub_category_name');
-        $uqery = $this->db->get('sub_categories');
-        return $uqery->result_array();
-    }
-    public function get_categories(){
-        $this->db->order_by('category_name');
-        $uqery = $this->db->get('categories');
-        return $uqery->result_array();
+    public function comment_count()
+    {
+        return $this->db->count_all("comments");
     }
 
 
@@ -110,6 +119,8 @@ class Post_model extends CI_Model
         }
         return false;
     }
+
+
 
 
 }

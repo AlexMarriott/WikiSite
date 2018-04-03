@@ -34,21 +34,28 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-left">
+            <!-- TODO using js, make the active page change when moving from different pages -->
+            <li class="nav-item active">
+                <a class="nav-link" href="<?php echo base_url();?>">Home
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url();?>about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url();?>account">Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url();?>categories/">Categories</a>
+            </li>
+        </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo base_url();?>">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url();?>about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url();?>account">Account</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>posts/create">Create New Post</a>
                 </li>
+
             </ul>
         </div>
     </div>

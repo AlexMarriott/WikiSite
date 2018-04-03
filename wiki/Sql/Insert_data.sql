@@ -40,5 +40,5 @@ INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,rating_id_FK,s
 
 
 
-INSERT INTO comments (comment,comment_date,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post", "2017-03-12",1,1);
-INSERT INTO comments (comment,comment_date,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post", "2017-03-12",1,2);
+INSERT INTO comments (comment,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post",1,1);
+INSERT INTO comments (comment,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post", 1,2);
