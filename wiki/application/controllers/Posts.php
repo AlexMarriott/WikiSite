@@ -74,10 +74,7 @@ class Posts extends CI_Controller
                 $this->load->view('posts/create', $data);
                 $this->load->view('templates/footer');
             } else {
-
-                $this->session->mark_as_flash('success');
-                $success = "The Post was create successfully!";
-                $this->session->set_flashdata('success', $success);
+                $this->session->set_flashdata('post_created', 'The Post was create successfully!');
                 redirect('posts');
             }
         }
@@ -106,6 +103,7 @@ class Posts extends CI_Controller
 
     public function update(){
         $this->Post_model->update_post();
+        $this->session->set_flashdata('post_update', 'The Post was create updated!');
         redirect('posts');
     }
 

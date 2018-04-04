@@ -6,9 +6,9 @@
  * The create tables script creates the necessary tables to work in the database. ID's for each table is auto incremented.
  */
 
-INSERT INTO users (email_address, account_password,username) VALUES ("alex-blah123@gmail.com", "Blah1234","amarriott");
-INSERT INTO users (email_address, account_password,username) VALUES ("supercool23@gmail.com", "supplier_name","toomanycooks");
-INSERT INTO users (email_address, account_password,username) VALUES ("email_address@gmail.com", "123345","whatislife");
+INSERT INTO users (email_address, account_password,user_name) VALUES ("alex-blah123@gmail.com", "Blah1234","amarriott");
+INSERT INTO users (email_address, account_password,user_name) VALUES ("supercool23@gmail.com", "supplier_name","toomanycooks");
+INSERT INTO users (email_address, account_password,user_name) VALUES ("email_address@gmail.com", "123345","whatislife");
 
 INSERT INTO categories (category_name) VALUES ("Networking");
 INSERT INTO categories (category_name) VALUES ("Software");

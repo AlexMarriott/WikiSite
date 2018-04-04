@@ -36,6 +36,7 @@
                 $this->load->view('templates/footer');
             }else{
                 $this->Category_model->create_category();
+                $this->session->set_flashdata('categroy_created', 'The Post was create updated!');
                 redirect('categories');
             }
         }

@@ -10,7 +10,7 @@ CREATE TABLE users
 (user_id BIGINT(20) NOT NULL AUTO_INCREMENT,
 email_address VARCHAR(100) NOT NULL UNIQUE,
 account_password VARCHAR(100) NOT NULL,
-username VARCHAR(100) NOT NULL,
+user_name VARCHAR(100) NOT NULL,
 CONSTRAINT user_PK PRIMARY KEY (user_id));
 
 CREATE TABLE categories

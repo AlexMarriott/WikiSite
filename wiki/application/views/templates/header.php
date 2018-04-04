@@ -53,6 +53,9 @@
         </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url();?>users/register">Register</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>posts/create">Create New Post</a>
                 </li>
 
@@ -60,3 +63,10 @@
         </div>
     </div>
 </nav>
+
+<div class="container">
+    <!-- Flash messages-->
+    <?php if ($this->seesion->flashdata('user_registered')):?>
+        <?php echo '<p class="alert alert-success">'.$this->seesion->flastdata('user_reghistered').'</p>';?>
+    <?php endif; ?>
+</div>
