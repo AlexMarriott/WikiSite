@@ -1,3 +1,5 @@
+
+
 <!-- Page Content -->
 <div class="container">
 
@@ -6,24 +8,22 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
 
-            <h1 class="my-4">Page Heading
-                <small>Secondary Text</small>
-            </h1>
-
-            <?php foreach ($results as $data):?>
-
+            <h1 class="my-4">Wiki N Stuff Knowledge Base.</h1>
+            <?php echo '<h2>'. $title . '</h2>'?>
+            <?php foreach ($posts as $data):?>
             <!-- Blog Post -->
             <div class='card mb-4'>
-                <img class='card-img-top' src='http://placehold.it/750x300' alt='Card image cap'>
+                <img class='card-img-top' src="<?php echo site_url(); ?>assets/images/posts/<?php echo $data['post_image'];?>" alt='Card image cap'>
                 <div class='card-body'>
-                    <h2 class='card-title'><?php echo $data->post_title; ?></h2>
-                    <p class='card-text'><?php echo $data->post_body;?></p>
-                    <a href="<?php echo 'http://student30371.bucomputing.uk/wiki/posts/view/'.$data->slug;?>" class='btn btn-primary'>Read More &rarr;</a>
+                    <h2 class='card-title'><?php echo $data['post_title']; ?></h2>
+                    <p class='card-text'><?php echo word_limiter($data['post_body'], 25);?></p>
+                    <a href="<?php echo site_url('posts/view/'.$data['slug']);?>" class='btn btn-primary'>Read More &rarr;</a>
                 </div>
                 <div class='card-footer text-muted'>
-            <?php echo $data->post_date;?>
-            <a href="<?php //TODO create a user controller and pass the username not the user id.
-             echo 'http://student30371.bucomputing.uk/wiki/user/'.$data->user_id_FK;?>">user</a>
+                    <small class="posted-date">Created on: <?php echo $data['post_date'];?> <br>
+                        Sub-Category: <strong><?php echo $data['sub_category_name'];?></strong></small><br>
+            <small class="user">By: <a href='<?php //TODO create a user controller
+             echo site_url('user/'.$data['user_id_FK']);?>'>user</a></small>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -41,7 +41,7 @@
             <!-- Pagination Numbers -->
             <ul class="pagination justify-content-center mb-4">
                 <!-- Show pagination links -->
-                <p><?php echo $links; ?></p>
+                <?php echo '<p>' . $links . '</p>' ?>
             </ul>
 
         </div>
@@ -94,13 +94,18 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                        <div class="col-lg-6">
+                            <div class="align-self-end">
+                                <strong><a href="http://student30371.bucomputing.uk/wiki/categories">View More...</a></strong>
+                            </div>
+                </div>
+            </div>
                 </div>
             </div>
 
             <!-- Side Widget -->
             <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
+                <h5 class="card-header">User account view</h5>
                 <div class="card-body">
                     You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
                 </div>
@@ -113,14 +118,3 @@
 
 </div>
 <!-- /.container -->
-
-
-</head>
-<body>
-<div id="container">
-    <p>Note:- Please start typing surname as "Chavan", "Patil"</p>
-    <input type="text" name="search" id="search" />
-    <ul id="finalResult"></ul>
-</div>
-</body>
-</html>

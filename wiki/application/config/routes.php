@@ -53,13 +53,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 
-
+$route['categories'] = 'categories/index';
 $route['posts/create'] = 'posts/create';
-$route['posts/update'] = 'posts/update';
 $route['posts'] = 'pages/view';
 $route['posts/$1'] = 'posts/view/$1';
 $route['(:any)'] = 'pages/view/$1';
-$route['default_controller'] = 'pages/view';
+
+$route['users/login'] = 'users/login';
+$route['users/register'] = 'users/register';
+
+
+$route['categories/create'] = 'categories/create';
+$route['categories/posts/(:any)'] = 'categories/posts/$1';
 $route['search/index.php'] = 'search';
-$route['login/index.php'] = 'login';
 $route['translate_uri_dashes']=FALSE;
+$route['default_controller'] = 'pages/view';
