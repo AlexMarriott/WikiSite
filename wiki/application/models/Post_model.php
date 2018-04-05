@@ -34,17 +34,23 @@ class Post_model extends CI_Model
     public function get_posts_by_sub_category($sub_category_id){
         $this->db->order_by('post_id', 'DESC');
         $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
-        $this->db->join('categories', 'categories.category_id = sub_categories.category_id_FK');
         $query = $this->db->get_where('posts', array('sub_category_id' => $sub_category_id));
         return $query->result_array();
 
     }
 
-    public function get_sub_categories(){
-        $this->db->order_by('sub_category_name');
-        $uqery = $this->db->get('sub_categories');
-        return $uqery->result_array();
+    public function get_sub_categories($slug = null){
+        if ($slug === null){
+            $this->db->order_by('sub_category_name');
+            $query = $this->db->get('sub_categories');
+            return $query->result_array();
+        }
+
+        $this->db->join('sub_categories', 'sub_categories.category_id_FK = categories.category_id');
+        $query = $this->db->get_where('categories',array('category_name' => $slug));
+        return $query->result_array();
     }
+
     public function get_categories(){
         $this->db->order_by('category_name');
         $query = $this->db->get('categories');
@@ -56,7 +62,7 @@ class Post_model extends CI_Model
         $this->load->helper('url');
         $slug = url_title($this->input->post('title'), 'dash', true);
 
-        if ($this->get_post($slug)){
+        if ($this->get_posts($slug)){
             return FALSE;
         }
 
@@ -65,12 +71,10 @@ class Post_model extends CI_Model
             'slug' =>$slug,
             'post_body' => $this->input->post('body'),
             'post_image' => $post_image,
-            //'post_date' => date('20y-m-d'),
             'sub_categories_FK' => $this->input->post('subcategory'),
             //Default variables done for testing purposes
             'user_id_FK' => $this->session->userdata('user_id'),
             'rating_id_FK' => 1,
-            //'sub_categories_FK' => 1
         );
 
         return $this->db->insert('posts', $data);

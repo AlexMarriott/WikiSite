@@ -18,7 +18,6 @@
             }
 
         }
-
         public function login($username, $password)
         {
             $this->db->where("user_name", $username);

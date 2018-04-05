@@ -30,6 +30,15 @@ CREATE TABLE ratings
  rating_score BIGINT(20) NOT NULL,
  CONSTRAINT rating_id_PK PRIMARY KEY (rating_id));
 
+
+CREATE TABLE post_ratings
+(user_id BIGINT(20) NOT NULL UNIQUE,
+ post_id BIGINT(20) NOT NULL UNIQUE,
+ rating BIGINT(20),
+ CONSTRAINT post_rating_PK PRIMARY KEY (user_id,post_id),
+ CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES users (user_id),
+ CONSTRAINT user_id_FK FOREIGN KEY (post_id) REFERENCES posts (post_id));
+
 CREATE TABLE posts
 (post_id BIGINT(20) NOT NULL AUTO_INCREMENT,
 post_title VARCHAR(100) NOT NULL,

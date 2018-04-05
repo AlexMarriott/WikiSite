@@ -64,6 +64,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>users/logout">Log out</a>
                 </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url();?>categories/create">Create a new sub-category</a>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>posts/create">Create New Post</a>
                 </li>
@@ -89,6 +92,9 @@
     <?php endif; ?>
     <?php if ($this->session->flashdata('user_logged_out')):?>
         <?php echo '<p class="alert alert-info">'.$this->session->flashdata('user_logged_out').'</p>';?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('categroy_created')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('categroy_created').'</p>';?>
     <?php endif; ?>
     <?php if ($this->session->flashdata('generic_error')):?>
         <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('generic_error').'</p>';?>

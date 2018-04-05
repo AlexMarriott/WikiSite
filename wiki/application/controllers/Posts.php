@@ -40,8 +40,8 @@ class Posts extends CI_Controller
     public function view($slug = NULL)
     {
         $data['post_item'] = $this->Post_model->get_posts($slug);
-        //$post_id = $data['post_item']['post_id'];
         $data['comments'] = $this->Comment_model->get_comments($data['post_item']['post_id']);
+        $data['title'] = $data['post_item']['post_title'];
 
         $data['count'] = $this->Post_model->comment_count();
 

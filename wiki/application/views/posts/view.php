@@ -9,10 +9,8 @@ echo '<h2>' . $post_item['post_body'] . '</h2>';
 
 echo '<h2>' . $post_item['rating_score'] . '</h2>';
 
-echo '<h2>' . $post_item['post_date'] . '</h2>';
+echo '<h2>' . $post_item['post_date'] . '</h2>';?>
 
-
-?>
 <?php if ($this->session->userdata('user_id') == $post_item['user_id_FK']): ?>
 <hr>
 <a class="btn btn-primary pull-left"
@@ -43,7 +41,6 @@ echo '<h2>' . $post_item['post_date'] . '</h2>';
 </div>
 <input type="hidden" name="slug" value="<?php echo $post_item['slug']; ?>">
 <button class="btn btn-primary" type="submit">Submit Comment</button>
-
 </form>
 
 
