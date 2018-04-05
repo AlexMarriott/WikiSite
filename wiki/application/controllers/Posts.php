@@ -12,12 +12,36 @@ class Posts extends CI_Controller
         $this->load->library('session','upload');
     }
 
+    public function index($offset = 0){
+        $config['base_url'] = base_url().'posts/index/';
+        $config['total_rows'] = $this->db->count_all('posts');
+        $config['per_page'] = 5;
+        $config['url_segment'] = 3;
+        $config['full_tag_open'] = '<div class="pagination justify-content-center mb-4">';
+        $config['full_tag_close'] = '</div>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        //$config['attributes'] = array('class' => 'page-link');
+        $this->pagination->initialize($config);
+
+
+        $config['full_tag_open'] = '<div class="pagination">';
+
+
+        $data['title'] = 'Newest Posts';
+
+        $data['posts'] = $this->Post_model->get_posts(false, $config['per_page'], $offset);
+
+        $this->load->view('templates/header');
+        $this->load->view('posts/index', $data);
+        $this->load->view('templates/footer');
+    }
 
     public function view($slug = NULL)
     {
-        $data['post_item'] = $this->Post_model->get_post($slug);
-        $post_id = $data['post_item']['post_id'];
-        $data['comments'] = $this->Comment_model->get_comments($post_id);
+        $data['post_item'] = $this->Post_model->get_posts($slug);
+        //$post_id = $data['post_item']['post_id'];
+        $data['comments'] = $this->Comment_model->get_comments($data['post_item']['post_id']);
 
         $data['count'] = $this->Post_model->comment_count();
 
@@ -31,6 +55,9 @@ class Posts extends CI_Controller
 
     public function create()
     {
+        if (!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $this->load->helper('form');
         $this->load->library('form_validation');
 
@@ -81,13 +108,25 @@ class Posts extends CI_Controller
     }
 
     public function delete($post_id){
+        if (!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $this->Post_model->delete_post($post_id);
         redirect('posts');
 
     }
 
     public function edit($slug){
-        $data['post_item'] = $this->Post_model->get_post($slug);
+        if (!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
+        $data['post_item'] = $this->Post_model->get_posts($slug);
+
+        // Check user
+        if($this->session->userdata('user_id') != $data['post_item']['user_id']){
+            redirect('posts');
+
+        }
         $data['sub_categories'] = $this->Post_model->get_sub_categories();
         $data['categories'] = $this->Post_model->get_categories();
 
@@ -102,6 +141,9 @@ class Posts extends CI_Controller
     }
 
     public function update(){
+        if (!$this->session->userdata('logged_in')){
+            redirect('users/login');
+        }
         $this->Post_model->update_post();
         $this->session->set_flashdata('post_update', 'The Post was create updated!');
         redirect('posts');

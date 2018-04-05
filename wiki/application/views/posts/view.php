@@ -13,19 +13,20 @@ echo '<h2>' . $post_item['post_date'] . '</h2>';
 
 
 ?>
-
+<?php if ($this->session->userdata('user_id') == $post_item['user_id_FK']): ?>
 <hr>
 <a class="btn btn-primary pull-left"
    href="<?php echo base_url(); ?>posts/edit/<?php echo $post_item['slug']; ?>">Edit</a>
 <?php echo form_open('posts/delete/' . $post_item['post_id']); ?>
 <input type="submit" value="Delete" class="btn btn-danger">
 </form>
+<?php endif; ?>
 <hr>
 <h3>Comments</h3>
 <?php if ($comments) : ?>
     <?php foreach ($comments as $comment) : ?>
         <div class="well">
-            <h5><?php echo $comment['comment']; ?> [<strong>by <?php echo "username here"; ?></strong>] </h5>
+            <h5><?php echo $comment['comment']; ?> [<strong>by <?php echo $post_item['user_name']; ?></strong>] </h5>
         </div>
     <?php endforeach; ?>
 <?php else : ?>

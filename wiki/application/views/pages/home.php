@@ -118,14 +118,3 @@
 
 </div>
 <!-- /.container -->
-
-
-</head>
-<body>
-<div id="container">
-    <p>Note:- Please start typing surname as "Chavan", "Patil"</p>
-    <input type="text" name="search" id="search" />
-    <ul id="finalResult"></ul>
-</div>
-</body>
-</html>

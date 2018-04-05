@@ -8,8 +8,11 @@ class Post_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_post($slug = FALSE)
+    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE)
     {
+        if($limit){
+            $this->db->limit($limit, $offset);
+        }
         if ($slug === FALSE) {
             $this->db->order_by('post_id','DESC');
             $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
@@ -17,6 +20,7 @@ class Post_model extends CI_Model
             //var_dump($query);
             return $query->result_array();
         }
+
         $this->db->select('*');
         $this->db->from('posts');
         $this->db->join('users', 'users.user_id = posts.user_id_FK');
@@ -64,8 +68,7 @@ class Post_model extends CI_Model
             //'post_date' => date('20y-m-d'),
             'sub_categories_FK' => $this->input->post('subcategory'),
             //Default variables done for testing purposes
-            //TODO configure this to allow for the real values to be pulled from sessions etc
-            'user_id_FK' => 1,
+            'user_id_FK' => $this->session->userdata('user_id'),
             'rating_id_FK' => 1,
             //'sub_categories_FK' => 1
         );

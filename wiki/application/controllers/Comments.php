@@ -6,7 +6,7 @@ class Comments extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $slug = $this->input->post('slug');
-        $data['post_item'] = $this->Post_model->get_post($slug);
+        $data['post_item'] = $this->Post_model->get_posts($slug);
 
         $this->form_validation->set_rules("comments",'Comments', 'required');
 

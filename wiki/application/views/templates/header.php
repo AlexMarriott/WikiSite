@@ -52,12 +52,23 @@
             </li>
         </ul>
             <ul class="navbar-nav ml-auto">
+                <?php if(!$this->session->userdata('logged_in')): ?>
+                    <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url();?>users/login">Login</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>users/register">Register</a>
+                </li>
+                <?php endif; ?>
+                <?php if($this->session->userdata('logged_in')): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url();?>users/logout">Log out</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>posts/create">Create New Post</a>
                 </li>
+                <?php endif; ?>
+
 
             </ul>
         </div>
@@ -66,7 +77,22 @@
 
 <div class="container">
     <!-- Flash messages-->
-    <?php if ($this->seesion->flashdata('user_registered')):?>
-        <?php echo '<p class="alert alert-success">'.$this->seesion->flastdata('user_reghistered').'</p>';?>
+    <?php if ($this->session->flashdata('user_registered')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_registered').'</p>';?>
     <?php endif; ?>
+
+    <?php if ($this->session->flashdata('failed_login')):?>
+        <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('failed_login').'</p>';?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('user_logged_in')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_logged_in').'</p>';?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('user_logged_out')):?>
+        <?php echo '<p class="alert alert-info">'.$this->session->flashdata('user_logged_out').'</p>';?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('generic_error')):?>
+        <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('generic_error').'</p>';?>
+    <?php endif; ?>
+
+
 </div>

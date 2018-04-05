@@ -4719,7 +4719,7 @@ tbody.collapse.show {
   color: #6c757d;
 }
 
-.pagination {
+.pagination.justify-content-center.mb-4 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

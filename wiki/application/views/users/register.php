@@ -11,6 +11,10 @@
     <div class="col-md-4 col-md-offset-4">
         <h1 class="text-center"><?= $title; ?></h1>
         <div class="form-group">
+            <label>User Name</label>
+            <input type="text" class="form-control" name="user_name" placeholder="User Name">
+        </div>
+        <div class="form-group">
             <label>Email</label>
             <input type="text" class="form-control" name="email_address" placeholder="Email Address">
         </div>
@@ -21,10 +25,6 @@
         <div class="form-group">
             <label>Confirm Password</label>
             <input type="password" class="form-control" name="account_password2" placeholder="Confirm Password">
-        </div>
-        <div class="form-group">
-            <label>User Name</label>
-            <input type="text" class="form-control" name="username" placeholder="UserName">
         </div>
         <button type="submit" class="btn btn-primary btn-block">Submit</button>
     </div>

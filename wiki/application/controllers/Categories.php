@@ -24,6 +24,9 @@
         }
 
         public function create(){
+            if (!$this->session->userdata('logged_in')){
+                redirect('users/login');
+            }
             $this->load->helper('form');
             $this->load->library('form_validation');
             $data['title'] = 'Create Category';
