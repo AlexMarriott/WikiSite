@@ -6,13 +6,18 @@
  * The create tables script creates the necessary tables to work in the database. ID's for each table is auto incremented.
  */
 
-INSERT INTO users (email_address, account_password,user_name) VALUES ("alex-blah123@gmail.com", MD5("Blah1234"),"amarriott");
-INSERT INTO users (email_address, account_password,user_name) VALUES ("supercool23@gmail.com", MD5("supplier_name"),"toomanycooks");
-INSERT INTO users (email_address, account_password,user_name) VALUES ("email_address@gmail.com", MD5("123345"),"whatislife");
+INSERT INTO users (email_address, account_password,user_name) VALUES ("alex-blah123@gmail.com", "$2y$10$PGMDZKIA2YyukBSsSe0S0uCjZymNpQvjruUY/Fkj0jd6dUuhUNggi","amarriott");
+INSERT INTO users (email_address, account_password,user_name) VALUES ("supercool23@gmail.com",  "$2y$10$Qs8dceZpm7Un/kc5ZczfV.LpViMxFoHW448s/EZUglzNGjolPkejy","toomanycooks");
+INSERT INTO users (email_address, account_password,user_name) VALUES ("email_address@gmail.com", "$2y$10$eOAuMwGG.RY1yyLuU0dwQu2feviRTeIPC4n6wFGdhWOohjvBd114S","whatislife");
 
 INSERT INTO categories (category_name) VALUES ("Networking");
 INSERT INTO categories (category_name) VALUES ("Software");
 INSERT INTO categories (category_name) VALUES ("Infrastructure");
+INSERT INTO categories (category_name) VALUES ("System Design");
+INSERT INTO categories (category_name) VALUES ("Hardware");
+INSERT INTO categories (category_name) VALUES ("Databases");
+
+
 
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Subnetting",1);
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Classful",1);
@@ -23,6 +28,15 @@ INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Python",2
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Centos",3);
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Ubuntu",3);
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Arch",3);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("UML",4);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Data Flow Diagrams",4);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Class Diagrams",4);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("RAM",5);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Network Cards",5);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("CPU",5);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Mysql",6);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("SQL",6);
+INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Redis",6);
 
 
 INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix","how-to-fix","stuff about the postshere","default_image.jpg",1,1);

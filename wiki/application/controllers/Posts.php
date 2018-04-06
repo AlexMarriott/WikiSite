@@ -165,17 +165,14 @@ class Posts extends CI_Controller
             redirect('users/login');
         }
         $this->Post_model->update_rating($post_id);
-        $butts = $this->Post_model->get_ratings($post_id);
         $post_rating_data= array(
-            'rated_post_id' => $butts['post_id'],
-            'current_user_id' => $current_user_id,
+            'rated_post_id' => $post_id,
             'if_rated' => true,
         );
         $this->session->set_userdata($post_rating_data);
 
         $this->session->set_flashdata('complete_rating', 'Thank you for rating the post :)');
-        redirect('posts/view/'. $slug, $butts);
-
+        redirect('posts/view/'. $slug);
 
     }
 

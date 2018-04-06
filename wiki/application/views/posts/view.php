@@ -18,25 +18,16 @@ echo '<h2>' . $post_item['post_date'] . '</h2>'; ?>
     <?php echo form_open('posts/delete/' . $post_item['post_id']); ?>
     <input type="submit" value="Delete" class="btn btn-danger">
     </form>
-
-<?php endif; ?>
-<?php echo $butts['post_id'];?>
-<br>
-<?php echo $_SESSION['current_user_id'];?>
-<br>
-
-<?php echo $_SESSION['if_rated'];?>
-<br>
-
-
-<?php //if ($this->session->userdata('user_id') == $this->session->userdata('post_rating_data')): //TODO cookie related stuff here?>
-<?php echo form_open('posts/rate/' . $post_item['post_id']); ?>
-<button type='submit' class='btn btn-default' aria-label='Left Align'>
+    <?php else:?>
+    <?php echo form_open('posts/rate/' . $post_item['post_id']); ?>
+    <button type='submit' class='btn btn-default' aria-label='Left Align'>
     <span class='glyphicon glyphicon-arrow-up'
-          aria-hidden='true'></span>
-</button>
-<input type="hidden" name="slug" value="<?php echo $post_item['slug']; ?>">
-<input type="hidden" name="logged_in_user_id" value="<?php echo $this->session->userdata('user_id');; ?>">
+          aria-hidden='true'>^</span>
+    </button>
+    <input type="hidden" name="slug" value="<?php echo $post_item['slug']; ?>">
+    <input type="hidden" name="logged_in_user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
+<?php endif; ?>
+
 
 </form>
 
@@ -63,5 +54,3 @@ echo '<h2>' . $post_item['post_date'] . '</h2>'; ?>
 <input type="hidden" name="slug" value="<?php echo $post_item['slug']; ?>">
 <button class="btn btn-primary" type="submit">Submit Comment</button>
 </form>
-
-
