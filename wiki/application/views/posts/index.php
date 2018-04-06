@@ -30,7 +30,9 @@
                             Sub-Category: <strong><?php echo $data['sub_category_name']; ?></strong></small>
                         <br>
                         <small class="user">By: <a href='<?php
-                            echo site_url('user/' . $data['user_id_FK']); ?>'>user</a></small>
+                            echo site_url('user/' . $data['user_id_FK']);?>'> <?php echo $data['user_name'];?></a></small>
+                        <br>
+                        <small>Current rating:<strong> <?php echo $data['rating'];?></strong></small>
                         <button type='button' class='btn btn-default' aria-label='Left Align'>
                             <span class='glyphicon glyphicon-arrow-up'
                                   aria-hidden='true'></span>

@@ -8,27 +8,37 @@ class Post_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE)
+    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE, $check_post = false)
     {
         if($limit){
             $this->db->limit($limit, $offset);
         }
         if ($slug === FALSE) {
-            $this->db->order_by('post_id','DESC');
+            $this->db->order_by('rating','DESC');
             $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
+            $this->db->join('users', 'users.user_id = posts.user_id_FK');
+            $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
             $query = $this->db->get('posts');
-            //var_dump($query);
             return $query->result_array();
         }
 
         $this->db->select('*');
         $this->db->from('posts');
         $this->db->join('users', 'users.user_id = posts.user_id_FK');
-        $this->db->join('ratings', 'ratings.rating_id = posts.rating_id_FK');
+        $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
         $this->db->where('slug', $slug);
 
         $query = $this->db->get();
         return $query->row_array();
+    }
+
+    public function check_post_exists($slug){
+            $this->db->select('*');
+            $this->db->from('posts');
+            $this->db->where('slug', $slug);
+            $this->db->where('user_id_FK', $this->session->userdata('user_id'));
+            $query = $this->db->get();
+            return $query->row_array();
     }
 
     public function get_posts_by_sub_category($sub_category_id){
@@ -74,10 +84,24 @@ class Post_model extends CI_Model
             'sub_categories_FK' => $this->input->post('subcategory'),
             //Default variables done for testing purposes
             'user_id_FK' => $this->session->userdata('user_id'),
-            'rating_id_FK' => 1,
         );
 
+
         return $this->db->insert('posts', $data);
+    }
+    public function create_rating()
+    {
+        $this->load->helper('url');
+        $slug = url_title($this->input->post('title'), 'dash', true);
+
+        $post_info = $this->check_post_exists($slug);
+        var_dump($post_info);
+        $data = array(
+            'user_id' => $this->session->userdata('user_id'),
+            'post_id' =>$post_info['post_id'],
+            'rating' => 1
+        );
+        return $this->db->insert('post_ratings', $data);
     }
 
     public function delete_post($post_id){

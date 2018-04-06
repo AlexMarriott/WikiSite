@@ -21,7 +21,8 @@ class Posts extends CI_Controller
         $config['full_tag_close'] = '</div>';
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
-        //$config['attributes'] = array('class' => 'page-link');
+
+
         $this->pagination->initialize($config);
 
 
@@ -101,6 +102,7 @@ class Posts extends CI_Controller
                 $this->load->view('posts/create', $data);
                 $this->load->view('templates/footer');
             } else {
+                $this->Post_model->create_rating();
                 $this->session->set_flashdata('post_created', 'The Post was create successfully!');
                 redirect('posts');
             }
