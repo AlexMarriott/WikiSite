@@ -13,28 +13,9 @@ class Pages extends CI_Controller {
             // Whoops, we don't have a page for that!
             show_404();
         }
-
-        //Setting up pagnation
-        $config = array();
-        $config["base_url"] = base_url() . "";
-        $config["total_rows"] = $this->Post_model->record_count();
-        $config["per_page"] = 5;
-        $config["uri_segment"] = 3;
-
-        $this->pagination->initialize($config);
-
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
-        $data["results"] = $this->Post_model->fetch_data($config["per_page"], $page);
-
-        $data["links"] = $this->pagination->create_links();
-
-        //$data['title'] = ucfirst($page); // Capitalize the first letter
-        $data['posts'] = $this->Post_model->get_post();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('pages/'.$web_page, $data);
-        $this->load->view('templates/footer', $data);
+        $this->load->view('templates/header');
+        $this->load->view('pages/'.$web_page);
+        $this->load->view('templates/footer');
     }
 }
 ?>

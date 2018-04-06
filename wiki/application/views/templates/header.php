@@ -64,6 +64,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>users/logout">Log out</a>
                 </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo base_url();?>categories/create">Create a new sub-category</a>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>posts/create">Create New Post</a>
                 </li>
@@ -76,13 +79,13 @@
 </nav>
 
 <div class="container">
-    <!-- Flash messages-->
+
+    <!-- Flash messages Success-->
     <?php if ($this->session->flashdata('user_registered')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_registered').'</p>';?>
     <?php endif; ?>
-
-    <?php if ($this->session->flashdata('failed_login')):?>
-        <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('failed_login').'</p>';?>
+    <?php if ($this->session->flashdata('complete_rating')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('complete_rating').'</p>';?>
     <?php endif; ?>
     <?php if ($this->session->flashdata('user_logged_in')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_logged_in').'</p>';?>
@@ -90,8 +93,24 @@
     <?php if ($this->session->flashdata('user_logged_out')):?>
         <?php echo '<p class="alert alert-info">'.$this->session->flashdata('user_logged_out').'</p>';?>
     <?php endif; ?>
+    <?php if ($this->session->flashdata('categroy_created')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('categroy_created').'</p>';?>
+    <?php endif; ?>
+
+    <!-- Flash messages Failed-->
+    <?php if ($this->session->flashdata('failed_login')):?>
+        <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('failed_login').'</p>';?>
+    <?php endif; ?>
     <?php if ($this->session->flashdata('generic_error')):?>
         <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('generic_error').'</p>';?>
+    <?php endif; ?>
+
+    <!-- Flash messages Info-->
+    <?php if ($this->session->flashdata('login_to_rate')):?>
+        <?php echo '<p class="alert alert-info">'.$this->session->flashdata('login_to_rate').'</p>';?>
+    <?php endif; ?>
+    <?php if ($this->session->flashdata('login_to_edit')):?>
+        <?php echo '<p class="alert alert-info">'.$this->session->flashdata('login_to_edit').'</p>';?>
     <?php endif; ?>
 
 

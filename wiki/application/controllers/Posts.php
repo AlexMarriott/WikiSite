@@ -10,14 +10,40 @@ class Posts extends CI_Controller
         $this->load->model('Post_model');
         $this->load->helper('url_helper');
         $this->load->library('session','upload');
+        $this->load->helper('cookie');
     }
 
+    public function index($offset = 0){
+        $config['base_url'] = base_url().'posts/index/';
+        $config['total_rows'] = $this->db->count_all('posts');
+        $config['per_page'] = 5;
+        $config['url_segment'] = 3;
+        $config['full_tag_open'] = '<div class="pagination justify-content-center mb-4">';
+        $config['full_tag_close'] = '</div>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+
+        $this->pagination->initialize($config);
+
+
+        $config['full_tag_open'] = '<div class="pagination">';
+
+
+        $data['title'] = 'Newest Posts';
+
+        $data['posts'] = $this->Post_model->get_posts(false, $config['per_page'], $offset);
+
+        $this->load->view('templates/header');
+        $this->load->view('posts/index', $data);
+        $this->load->view('templates/footer');
+    }
 
     public function view($slug = NULL)
     {
-        $data['post_item'] = $this->Post_model->get_post($slug);
-        //$post_id = $data['post_item']['post_id'];
+        $data['post_item'] = $this->Post_model->get_posts($slug);
         $data['comments'] = $this->Comment_model->get_comments($data['post_item']['post_id']);
+        $data['title'] = $data['post_item']['post_title'];
 
         $data['count'] = $this->Post_model->comment_count();
 
@@ -77,14 +103,16 @@ class Posts extends CI_Controller
                 $this->load->view('posts/create', $data);
                 $this->load->view('templates/footer');
             } else {
+                $this->Post_model->create_rating();
                 $this->session->set_flashdata('post_created', 'The Post was create successfully!');
                 redirect('posts');
             }
         }
     }
 
-    public function delete($post_id){
-        if (!$this->session->userdata('logged_in')){
+    public function delete($post_id)
+    {
+        if (!$this->session->userdata('logged_in')) {
             redirect('users/login');
         }
         $this->Post_model->delete_post($post_id);
@@ -94,9 +122,10 @@ class Posts extends CI_Controller
 
     public function edit($slug){
         if (!$this->session->userdata('logged_in')){
+            $this->session->set_flashdata('login_to_edit', 'Please login to edit the post.');
             redirect('users/login');
         }
-        $data['post_item'] = $this->Post_model->get_post($slug);
+        $data['post_item'] = $this->Post_model->get_posts($slug);
 
         // Check user
         if($this->session->userdata('user_id') != $data['post_item']['user_id']){
@@ -118,11 +147,36 @@ class Posts extends CI_Controller
 
     public function update(){
         if (!$this->session->userdata('logged_in')){
+            $this->session->set_flashdata('login_to_edit', 'Please login to edit the post.');
             redirect('users/login');
         }
+        $slug = url_title($this->input->post('title'), 'dash', true);
         $this->Post_model->update_post();
         $this->session->set_flashdata('post_update', 'The Post was create updated!');
-        redirect('posts');
+        redirect('posts/view'. $slug);
+    }
+
+    public function rate($post_id){
+        $slug = $this->input->post('slug');
+        $current_user_id = $this->input->post('logged_in_user_id');
+
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_to_rate', 'Please login to rate this post.');
+            redirect('users/login');
+        }
+        $this->Post_model->update_rating($post_id);
+        $butts = $this->Post_model->get_ratings($post_id);
+        $post_rating_data= array(
+            'rated_post_id' => $butts['post_id'],
+            'current_user_id' => $current_user_id,
+            'if_rated' => true,
+        );
+        $this->session->set_userdata($post_rating_data);
+
+        $this->session->set_flashdata('complete_rating', 'Thank you for rating the post :)');
+        redirect('posts/view/'. $slug, $butts);
+
+
     }
 
 

@@ -24,21 +24,20 @@ INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Centos",3
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Ubuntu",3);
 INSERT INTO sub_categories (sub_category_name,category_id_FK) VALUES ("Arch",3);
 
-INSERT INTO ratings (rating_score) VALUES (1);
-INSERT INTO ratings (rating_score) VALUES (2);
-INSERT INTO ratings (rating_score) VALUES (3);
-INSERT INTO ratings (rating_score) VALUES (4);
-INSERT INTO ratings (rating_score) VALUES (5);
-INSERT INTO ratings (rating_score) VALUES (6);
-INSERT INTO ratings (rating_score) VALUES (7);
-INSERT INTO ratings (rating_score) VALUES (8);
-INSERT INTO ratings (rating_score) VALUES (9);
-INSERT INTO ratings (rating_score) VALUES (10);
 
-INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,rating_id_FK,sub_categories_FK) VALUES ("how to fix","how-to-fix","stuff about the postshere","default_image.jpg",1,1,1);
-INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,rating_id_FK,sub_categories_FK) VALUES ("how to fix again","how-to-fix-again","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1,1);
-
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix","how-to-fix","stuff about the postshere","default_image.jpg",1,1);
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix again","how-to-fix-again","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1);
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix again once more","how-to-fix-again-once-more","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1);
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix again another time","how-to-fix-again-another-time","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1);
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix again second time","how-to-fix-again-second-time","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1);
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix again last time","how-to-fix-again-last-time","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1);
+INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories_FK) VALUES ("how to fix again come on. time","how-to-fix-again-come-on-time","stuff about thtics (style, behaviour) + CKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate aCKEditor: when you truncate a ﻿","default_image.jpg", 1,1);
 
 
 INSERT INTO comments (comment,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post",1,1);
 INSERT INTO comments (comment,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post", 1,2);
+
+INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,1,1);
+INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,2,2);
+INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,3,5);
+INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,4,10);
