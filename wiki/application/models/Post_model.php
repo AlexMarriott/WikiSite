@@ -104,6 +104,24 @@ class Post_model extends CI_Model
         return $this->db->insert('post_ratings', $data);
     }
 
+    public function update_rating($post_id){
+        $this->db->set('rating', 'rating+1', FALSE);
+        $this->db->where('post_id', $post_id);
+        return $this->db->update('post_ratings');
+    }
+
+    public function get_ratings($post_id = null){
+        if ($post_id = null){
+            $query = $this->db->get('post_ratings');
+            return $query->row_array();
+        }
+        $this->db->select('*');
+        $this->db->from('post_ratings');
+        $this->db->where('post_id', $post_id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
     public function delete_post($post_id){
         $this->db->where('post_id', $post_id);
         $this->db->delete('posts');
@@ -150,8 +168,4 @@ class Post_model extends CI_Model
         }
         return false;
     }
-
-
-
-
 }

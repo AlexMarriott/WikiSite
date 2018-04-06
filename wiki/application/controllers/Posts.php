@@ -10,6 +10,7 @@ class Posts extends CI_Controller
         $this->load->model('Post_model');
         $this->load->helper('url_helper');
         $this->load->library('session','upload');
+        $this->load->helper('cookie');
     }
 
     public function index($offset = 0){
@@ -109,8 +110,9 @@ class Posts extends CI_Controller
         }
     }
 
-    public function delete($post_id){
-        if (!$this->session->userdata('logged_in')){
+    public function delete($post_id)
+    {
+        if (!$this->session->userdata('logged_in')) {
             redirect('users/login');
         }
         $this->Post_model->delete_post($post_id);
@@ -120,6 +122,7 @@ class Posts extends CI_Controller
 
     public function edit($slug){
         if (!$this->session->userdata('logged_in')){
+            $this->session->set_flashdata('login_to_edit', 'Please login to edit the post.');
             redirect('users/login');
         }
         $data['post_item'] = $this->Post_model->get_posts($slug);
@@ -144,11 +147,36 @@ class Posts extends CI_Controller
 
     public function update(){
         if (!$this->session->userdata('logged_in')){
+            $this->session->set_flashdata('login_to_edit', 'Please login to edit the post.');
             redirect('users/login');
         }
+        $slug = url_title($this->input->post('title'), 'dash', true);
         $this->Post_model->update_post();
         $this->session->set_flashdata('post_update', 'The Post was create updated!');
-        redirect('posts');
+        redirect('posts/view'. $slug);
+    }
+
+    public function rate($post_id){
+        $slug = $this->input->post('slug');
+        $current_user_id = $this->input->post('logged_in_user_id');
+
+        if (!$this->session->userdata('logged_in')) {
+            $this->session->set_flashdata('login_to_rate', 'Please login to rate this post.');
+            redirect('users/login');
+        }
+        $this->Post_model->update_rating($post_id);
+        $butts = $this->Post_model->get_ratings($post_id);
+        $post_rating_data= array(
+            'rated_post_id' => $butts['post_id'],
+            'current_user_id' => $current_user_id,
+            'if_rated' => true,
+        );
+        $this->session->set_userdata($post_rating_data);
+
+        $this->session->set_flashdata('complete_rating', 'Thank you for rating the post :)');
+        redirect('posts/view/'. $slug, $butts);
+
+
     }
 
 

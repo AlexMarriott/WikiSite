@@ -39,18 +39,13 @@
                     redirect('users/login');
 
                 }
-
             }
-
-
         }
-
         public function login(){
 
             $this->load->helper('form');
             $this->load->library('form_validation');
             $data['title'] = 'Sign In';
-
 
             $this->form_validation->set_rules('user_name', 'Username', 'required');
             $this->form_validation->set_rules('account_password', 'Password', 'required');
@@ -79,12 +74,8 @@
                     redirect('users/login');
                 }
                 //setting message
-
             }
-
-
         }
-
         public function logout(){
             $this->session->unset_userdata('logged_in');
             $this->session->unset_userdata('user_id');
