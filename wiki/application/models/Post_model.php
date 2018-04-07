@@ -69,6 +69,7 @@ class Post_model extends CI_Model
 
     public function create_post($post_image)
     {
+        //TODO strip_tags(ltrim(rtrim( on the inputs
         $this->load->helper('url');
         $slug = url_title($this->input->post('title'), 'dash', true);
 
@@ -127,12 +128,16 @@ class Post_model extends CI_Model
         $this->db->delete('posts');
         return true;
     }
-    public function update_post(){
+    public function update_post($post_image ){
         $slug = url_title($this->input->post('title'), 'dash', true);
 
+        /*if ($post_image === false){
+            $post_image = 'default_image.jpg';
+        }*/
         $data = array(
             'post_title' => $this->input->post('title'),
             'slug' => $slug,
+            'post_image' => $post_image,
             'post_body' => $this->input->post('body'),
             'sub_categories_FK' => $this->input->post('subcategory')
         );

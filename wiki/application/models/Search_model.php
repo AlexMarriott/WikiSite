@@ -9,24 +9,23 @@
 class Search_model extends CI_Model
 {
 
-    function getPost($search){
-        $this->db->select("post_title");
-        $whereCondition= array("post_title" =>$search);
-        $this->db->where($whereCondition);
-        $this->db->from('posts');
-        $query = $this->db->get();
-        return $query->result();
+    function __construct()
+    {
+        parent::__construct();
     }
 
-
-    public function SearchAutoComplete(){
-        $current_date = date('Y-m-d h:i:s');
-        $this->db->select('post_id,post_title');
-        $this->db->from('posts');
-        $this->db->like('post_title', trim($this->input->post('string')), 'both');
-        $this->db->limit(10);
-        $query = $this->db->get();
-        $results = $query->result_array();
-        return $results;
+    function search($keyword)
+    {
+        $this->db->like('post_title',$keyword);
+        $this->db->or_like('user_name',$keyword);
+        $this->db->or_like('sub_category_name',$keyword);
+        $this->db->or_like('category_name',$keyword);
+        $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
+        $this->db->join('categories', 'categories.category_id = sub_categories.category_id_FK');
+        $this->db->join('users', 'users.user_id = posts.user_id_FK');
+        $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
+        $query = $this->db->get('posts');
+        return $query->result_array();
     }
+
 }

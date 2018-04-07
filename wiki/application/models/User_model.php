@@ -21,11 +21,11 @@
         public function login($username, $password)
         {
             $this->db->where("user_name", $username);
-            $this->db->where("account_password", $password);
 
             $result = $this->db->get("users");
 
-            if ($result->num_rows() == 1) {
+            $password_in_database = $result->row(0)->account_password;
+            if (password_verify($password, $password_in_database)) {
                 return $result->row(0)->user_id;
             } else {
                 return false;

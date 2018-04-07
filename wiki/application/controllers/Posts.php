@@ -30,7 +30,7 @@ class Posts extends CI_Controller
         $config['full_tag_open'] = '<div class="pagination">';
 
 
-        $data['title'] = 'Newest Posts';
+        $data['title'] = 'Top Rated Posts';
 
         $data['posts'] = $this->Post_model->get_posts(false, $config['per_page'], $offset);
 
@@ -88,7 +88,6 @@ class Posts extends CI_Controller
 
 
             if ( ! $this->upload->do_upload()) {
-                $errors = array('error' => $this->upload->display_errors());
                 //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg
                 $post_image = 'default_image.jpg';
             } else {
@@ -150,10 +149,28 @@ class Posts extends CI_Controller
             $this->session->set_flashdata('login_to_edit', 'Please login to edit the post.');
             redirect('users/login');
         }
+        //Image upload.
+        $config['upload_path'] = './assets/images/posts';
+        $config['allowed_types'] = 'png|jpg';
+        $config['max_size'] = '2048';
+        $config['max_width'] = '1024';
+        $config['max_height'] = '768';
+
+
+        $this->upload->initialize($config);
+
+
+        if ( ! $this->upload->do_upload()) {
+            //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg
+            $post_image = 'default_image.jpg';
+        } else {
+            $post_image = $_FILES['userfile']['name'];
+        }
+
         $slug = url_title($this->input->post('title'), 'dash', true);
-        $this->Post_model->update_post();
+        $this->Post_model->update_post($post_image);
         $this->session->set_flashdata('post_update', 'The Post was create updated!');
-        redirect('posts/view'. $slug);
+        redirect('posts/view/'. $slug);
     }
 
     public function rate($post_id){
@@ -165,17 +182,14 @@ class Posts extends CI_Controller
             redirect('users/login');
         }
         $this->Post_model->update_rating($post_id);
-        $butts = $this->Post_model->get_ratings($post_id);
         $post_rating_data= array(
-            'rated_post_id' => $butts['post_id'],
-            'current_user_id' => $current_user_id,
+            'rated_post_id' => $post_id,
             'if_rated' => true,
         );
         $this->session->set_userdata($post_rating_data);
 
         $this->session->set_flashdata('complete_rating', 'Thank you for rating the post :)');
-        redirect('posts/view/'. $slug, $butts);
-
+        redirect('posts/view/'. $slug);
 
     }
 

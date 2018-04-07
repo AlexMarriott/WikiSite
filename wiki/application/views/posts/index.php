@@ -30,7 +30,7 @@
                             Sub-Category: <strong><?php echo $data['sub_category_name']; ?></strong></small>
                         <br>
                         <small class="user">By: <a href='<?php
-                            echo site_url('user/' . $data['user_id_FK']);?>'> <?php echo $data['user_name'];?></a></small>
+                            echo site_url('user/view/' . $data['user_id_FK']);?>'> <?php echo $data['user_name'];?></a></small>
                         <br>
                         <small>Current rating:<strong> <?php echo $data['rating'];?></strong></small>
                     </div>
@@ -49,12 +49,14 @@
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
+                    <?php echo form_open('search/'); ?>
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
+                        <input type="text" class="form-control" name="keyword" placeholder="Search for post">
                         <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Go!</button>
+                  <button class="btn btn-secondary" type="submit">Search</button>
                 </span>
                     </div>
+                </form>
                 </div>
             </div>
 
@@ -67,26 +69,26 @@
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">Web Design</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/Networking">Networking</a>
                                 </li>
                                 <li>
-                                    <a href="#">HTML</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/Software">Software</a>
                                 </li>
                                 <li>
-                                    <a href="#">Freebies</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/Infrastructure">Infrastructure</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#">JavaScript</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/System Design">System Design</a>
                                 </li>
                                 <li>
-                                    <a href="#">CSS</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/Hardware">Hardware</a>
                                 </li>
                                 <li>
-                                    <a href="#">Tutorials</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/Databases">Databases</a>
                                 </li>
                             </ul>
                         </div>
@@ -104,8 +106,24 @@
             <div class="card my-4">
                 <h5 class="card-header">User account view</h5>
                 <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the
-                    new Bootstrap 4 card containers!
+                    <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <a href="http://student30371.bucomputing.uk/wiki/user/view/account/">Account</a>
+                            </li>
+                            <li>
+                                <a href="http://student30371.bucomputing.uk/wiki/user/view/usersid/posts">View Posts</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled mb-0">
+                            <li>
+                                <strong><?php echo $data['user_name'];?></strong>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
