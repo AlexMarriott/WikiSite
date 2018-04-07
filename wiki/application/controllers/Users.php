@@ -19,8 +19,7 @@
                 $this->load->view('users/register', $data);
                 $this->load->view('templates/footer');
             }else{
-                // encryption of the passswords
-                //$enc_password = hash('sha256',$this->input->post('password'));
+                //encrypting the password
                 $username = $this->input->post('user_name');
                 $password = $this->input->post('account_password');
                 $enc_password = password_hash($password,PASSWORD_BCRYPT);
@@ -31,7 +30,7 @@
                             'logged_in' => true);
                         $this->session->set_userdata($user_data);
                     //setting message
-                    $this->session->set_flashdata('user_registered', 'Account creation completed, you can now log in. ');
+                    $this->session->set_flashdata('user_registered', 'Account creation completed!');
                     redirect('posts');
 
                 }else{
@@ -77,6 +76,11 @@
                 }
                 //setting message
             }
+        }
+
+        public function view($user_id){
+
+
         }
         public function logout(){
             $this->session->unset_userdata('logged_in');

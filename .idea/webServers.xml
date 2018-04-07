@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a702923e-fc36-49b4-9ca7-9b00bdc0b2f2" name="student" url="http://student30371.bucomputing.uk/">
+        <fileTransfer host="student30371.bucomputing.uk" port="2223" rootFolder="/var/www/html" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="2223" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
