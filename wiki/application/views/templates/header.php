@@ -5,7 +5,7 @@
     <?php if (isset($_SESSION['success'])) {
         echo '<div class="alert alert-success" role="alert">' . $_SESSION['success'] . '</div>';
     }?>
-    <?php //echo var_dump($this->session->flashdata('success'));?>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -45,9 +45,6 @@
                 <a class="nav-link" href="<?php echo base_url();?>about">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url();?>account">Account</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url();?>categories/">Categories</a>
             </li>
         </ul>
@@ -84,27 +81,36 @@
     <?php if ($this->session->flashdata('user_registered')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_registered').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('complete_rating')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('complete_rating').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('user_logged_in')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_logged_in').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('user_logged_out')):?>
         <?php echo '<p class="alert alert-info">'.$this->session->flashdata('user_logged_out').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('categroy_created')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('categroy_created').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('post_created')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('post_created').'</p>';?>
     <?php endif; ?>
 
+    <?php if ($this->session->flashdata('post_update')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('post_update').'</p>';?>
+    <?php endif; ?>
 
     <!-- Flash messages Failed-->
     <?php if ($this->session->flashdata('failed_login')):?>
         <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('failed_login').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('generic_error')):?>
         <?php echo '<p class="alert alert-danger">'.$this->session->flashdata('generic_error').'</p>';?>
     <?php endif; ?>
@@ -113,8 +119,14 @@
     <?php if ($this->session->flashdata('login_to_rate')):?>
         <?php echo '<p class="alert alert-info">'.$this->session->flashdata('login_to_rate').'</p>';?>
     <?php endif; ?>
+
     <?php if ($this->session->flashdata('login_to_edit')):?>
         <?php echo '<p class="alert alert-info">'.$this->session->flashdata('login_to_edit').'</p>';?>
+    <?php endif; ?>
+
+    <!-- Flash messages warning-->
+    <?php if ($this->session->flashdata('login_to_view_account')):?>
+        <?php echo '<p class="alert alert-warning">'.$this->session->flashdata('login_to_view_account').'</p>';?>
     <?php endif; ?>
 
 

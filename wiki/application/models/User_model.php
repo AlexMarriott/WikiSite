@@ -33,10 +33,16 @@
         }
 
         public function get_user_id($username){
-        $this->db->where("user_name", $username);
-        $result = $this->db->get_where("users", 'user_id');
-        return $result->row(0)->user_id;
+        $this->db->where('user_name', $username);
+        $query = $this->db->get_where('users', 'user_id');
+        return $query->result_array();
 
+    }
+
+    public function get_user($user_id){
+            $this->db->where('user_id', $user_id);
+        $result = $this->db->get('users');
+        return $result->row(0)->user_id;
     }
 
         //Callback function which allows us to check if the username is unique and not already in the database.

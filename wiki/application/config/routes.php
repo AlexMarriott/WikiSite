@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+$route['users/view/$1'] = 'users/view/$1';
+$route['posts/rate/$1/$1'] = 'posts/rate/$1/$1';
 
 $route['search'] = 'search/index';
 $route['categories'] = 'categories/index';

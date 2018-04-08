@@ -51,7 +51,7 @@ INSERT INTO posts(post_title,slug,post_body,post_image,user_id_FK,sub_categories
 INSERT INTO comments (comment,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post",1,1);
 INSERT INTO comments (comment,user_id_FK,post_id_FK) VALUES ("ayyyy lmao good post", 1,2);
 
-INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,1,1);
-INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,2,2);
-INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,3,5);
-INSERT INTO post_ratings(user_id, post_id, rating) VALUES (1,4,10);
+INSERT INTO post_ratings(post_id, rating) VALUES (1,1);
+INSERT INTO post_ratings(post_id, rating) VALUES (2,2);
+INSERT INTO post_ratings(post_id, rating) VALUES (3,5);
+INSERT INTO post_ratings(post_id, rating) VALUES (4,5);

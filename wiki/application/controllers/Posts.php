@@ -39,11 +39,12 @@ class Posts extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    public function view($slug = NULL)
+    public function view($slug)
     {
         $data['post_item'] = $this->Post_model->get_posts($slug);
         $data['comments'] = $this->Comment_model->get_comments($data['post_item']['post_id']);
         $data['title'] = $data['post_item']['post_title'];
+        $data['post_rating'] = $this->Post_model->get_avg_rating_of_post($data['post_item']['post_id']);
 
         $data['count'] = $this->Post_model->comment_count();
 
@@ -169,28 +170,24 @@ class Posts extends CI_Controller
 
         $slug = url_title($this->input->post('title'), 'dash', true);
         $this->Post_model->update_post($post_image);
-        $this->session->set_flashdata('post_update', 'The Post was create updated!');
+        $this->session->set_flashdata('post_update', 'The Post was updated!');
         redirect('posts/view/'. $slug);
     }
 
-    public function rate($post_id){
-        $slug = $this->input->post('slug');
-        $current_user_id = $this->input->post('logged_in_user_id');
+    public function rate(){
+        $post_id =  $this->uri->segment(3);
+        $rating =  $this->uri->segment(4);
+        $slug = $this->uri->segment(5);
 
         if (!$this->session->userdata('logged_in')) {
             $this->session->set_flashdata('login_to_rate', 'Please login to rate this post.');
             redirect('users/login');
         }
-        $this->Post_model->update_rating($post_id);
-        $post_rating_data= array(
-            'rated_post_id' => $post_id,
-            'if_rated' => true,
-        );
-        $this->session->set_userdata($post_rating_data);
+        $this->Post_model->rate_post($post_id, $rating);
+
 
         $this->session->set_flashdata('complete_rating', 'Thank you for rating the post :)');
         redirect('posts/view/'. $slug);
-
     }
 
 

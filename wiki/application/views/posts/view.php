@@ -7,7 +7,7 @@ echo '<h2>' . $post_item['user_name'] . '</h2>';
 echo '<h2>' . $post_item['post_title'] . '</h2>';
 echo '<h2>' . $post_item['post_body'] . '</h2>';
 
-echo '<h2>' . $post_item['rating'] . '</h2>';
+echo '<h2>' . round($post_rating['rating']). '</h2>';
 
 echo '<h2>' . $post_item['post_date'] . '</h2>'; ?>
 
@@ -22,16 +22,14 @@ echo '<h2>' . $post_item['post_date'] . '</h2>'; ?>
 <?php endif; ?>
 
 <?php if ($this->session->userdata('user_id') != $post_item['user_id']):?>
-    <?php echo form_open('posts/rate/' . $post_item['post_id']); ?>
-    <button type='submit' class='btn btn-default' aria-label='Left Align'>
-    <span class='glyphicon glyphicon-arrow-up'
-          aria-hidden='true'>^</span>
-    </button>
-    <input type="hidden" name="slug" value="<?php echo $post_item['slug']; ?>">
-    <input type="hidden" name="logged_in_user_id" value="<?php echo $this->session->userdata('user_id');; ?>">
-</form>
+    <!-- https://www.youtube.com/watch?v=NmF_00eAjD8-->
+    <strong>Like the post? Give it a rating: </strong>
+    <?php foreach (range(1, 5) as $rating):?>
+        <a href= "<?php echo base_url('posts/rate/') .$post_item['post_id'] . '/' . $rating . '/' .$post_item['slug']; ?>" ><?php echo $rating?></a>
+    <?php endforeach; ?>
 <?php endif; ?>
-
+<input type="hidden" name="slug" value="<?php echo $post_item['slug']; ?>">
+<input type="hidden" name="logged_in_user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
 <hr>
 <h3>Comments</h3>
 <?php if ($comments) : ?>

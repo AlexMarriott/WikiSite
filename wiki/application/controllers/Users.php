@@ -42,6 +42,14 @@
         }
         public function login(){
 
+
+            /* taken from the old site
+            $uppercase = preg_match('@[A-Z]@', $password);
+            $lowercase = preg_match('@[a-z]@', $password);
+            $number    = preg_match('@[0-9]@', $password);
+            /(\d[0-9]|\d)/
+            */
+
             $this->load->helper('form');
             $this->load->library('form_validation');
             $data['title'] = 'Sign In';
@@ -54,8 +62,8 @@
                 $this->load->view('users/login', $data);
                 $this->load->view('templates/footer');
             }else{
-                $username = $this->input->post('user_name');
-                $password = $this->input->post('account_password');
+                $username = $this->input->post(strip_tags(ltrim(rtrim('user_name'))));
+                $password = $this->input->post(strip_tags(ltrim(rtrim('account_password'))));
 
                 $user_id = $this->User_model->login($username,$password);
 
@@ -69,19 +77,37 @@
                     redirect('posts');
 
                 }else{
-
-                    $this->session->set_flashdata('generic_error','memes');
-                    //$this->session->set_flashdata('failed_login', 'Incorrect username or password!');
+                    $this->session->set_flashdata('failed_login', 'Incorrect username or password!');
                     redirect('users/login');
                 }
                 //setting message
             }
         }
 
-        public function view($user_id){
+        public function view($user_id, $offset = 0){
+
+            $config['base_url'] = base_url().'posts/index/';
+            $config['total_rows'] = $this->Post_model->count_all_users_posts($user_id);
+            $config['per_page'] = 5;
+            $config['url_segment'] = 3;
+            $config['full_tag_open'] = '<div class="pagination justify-content-center mb-4">';
+            $config['full_tag_close'] = '</div>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
 
 
+            $this->pagination->initialize($config);
+
+            $config['full_tag_open'] = '<div class="pagination">';
+
+            $data['posts'] = $this->Post_model->get_posts(true, $config['per_page'], $offset, $user_id);
+            $data['title'] = 'Users posts';
+
+            $this->load->view('templates/header');
+            $this->load->view('posts/index', $data);
+            $this->load->view('templates/footer');
         }
+
         public function logout(){
             $this->session->unset_userdata('logged_in');
             $this->session->unset_userdata('user_id');

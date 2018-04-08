@@ -27,13 +27,7 @@ CONSTRAINT subcategory_id_PK PRIMARY KEY (sub_category_id),
 CONSTRAINT category_id_FK FOREIGN KEY (category_id_FK) REFERENCES categories(category_id) ON DELETE CASCADE ON UPDATE CASCADE);
 
 
-CREATE TABLE post_ratings
-(user_id BIGINT(20) NOT NULL,
- post_id BIGINT(20) NOT NULL UNIQUE,
- rating BIGINT(20),
- CONSTRAINT post_rating_PK PRIMARY KEY (user_id,post_id),
- CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES users (user_id),
- CONSTRAINT user_id_FK FOREIGN KEY (post_id) REFERENCES posts (post_id));
+
 
 CREATE TABLE posts
 (post_id BIGINT(20) NOT NULL AUTO_INCREMENT UNIQUE,
@@ -57,3 +51,10 @@ CREATE TABLE comments
  CONSTRAINT comment_id_PK PRIMARY KEY (comments_id),
  CONSTRAINT comment_user_FK FOREIGN KEY (user_id_FK) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
  CONSTRAINT comment_post_FK FOREIGN KEY (post_id_FK) REFERENCES posts (post_id) ON DELETE CASCADE ON UPDATE CASCADE);
+
+CREATE TABLE post_ratings
+(rating_id BIGINT(20) NOT NULL AUTO_INCREMENT,
+ post_id BIGINT(20) NOT NULL,
+ rating int(1),
+ CONSTRAINT post_rating_PK PRIMARY KEY (rating_id,post_id),
+ CONSTRAINT posts_id_FK FOREIGN KEY (post_id) REFERENCES posts (post_id));

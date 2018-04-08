@@ -8,7 +8,7 @@ class Post_model extends CI_Model
         $this->load->database();
     }
 
-    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE, $check_post = false)
+    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE, $user_id = FALSE)
     {
         if($limit){
             $this->db->limit($limit, $offset);
@@ -18,6 +18,15 @@ class Post_model extends CI_Model
             $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
             $this->db->join('users', 'users.user_id = posts.user_id_FK');
             $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
+            $query = $this->db->get('posts');
+            return $query->result_array();
+        }
+
+        if ($user_id != FALSE){
+            $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
+            $this->db->join('users', 'users.user_id = posts.user_id_FK');
+            $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
+            $this->db->where('user_id_FK', $user_id);
             $query = $this->db->get('posts');
             return $query->result_array();
         }
@@ -32,6 +41,17 @@ class Post_model extends CI_Model
         return $query->row_array();
     }
 
+    public function get_users_posts($user_id){
+        $this->db->select('*');
+        $this->db->from('posts');
+        $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
+        $this->db->join('users', 'users.user_id = posts.user_id_FK');
+        $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get('posts');
+        return $query->result_array();
+    }
+
     public function check_post_exists($slug){
             $this->db->select('*');
             $this->db->from('posts');
@@ -42,8 +62,9 @@ class Post_model extends CI_Model
     }
 
     public function get_posts_by_sub_category($sub_category_id){
-        $this->db->order_by('post_id', 'DESC');
         $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
+        $this->db->join('users', 'users.user_id = posts.user_id_FK');
+        $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
         $query = $this->db->get_where('posts', array('sub_category_id' => $sub_category_id));
         return $query->result_array();
 
@@ -105,18 +126,19 @@ class Post_model extends CI_Model
         return $this->db->insert('post_ratings', $data);
     }
 
-    public function update_rating($post_id){
-        $this->db->set('rating', 'rating+1', FALSE);
-        $this->db->where('post_id', $post_id);
-        return $this->db->update('post_ratings');
+    public function rate_post($post_id, $rating){
+
+        $query = array(
+            'post_id' => $post_id,
+            'rating' => $rating
+        );
+
+        return $this->db->insert('post_ratings', $query);
     }
 
-    public function get_ratings($post_id = null){
-        if ($post_id = null){
-            $query = $this->db->get('post_ratings');
-            return $query->row_array();
-        }
-        $this->db->select('*');
+    public function get_avg_rating_of_post($post_id = null){
+
+        $this->db->select_avg('rating');
         $this->db->from('post_ratings');
         $this->db->where('post_id', $post_id);
         $query = $this->db->get();
@@ -152,10 +174,10 @@ class Post_model extends CI_Model
     }
 
 
-    // Pagination_Section TODO edit.
-    public function record_count()
+    public function count_all_users_posts($user_id)
     {
-        return $this->db->count_all("posts");
+        $query = $this->db->where('user_id_FK', $user_id)->get('posts');
+        return $query->num_rows();
     }
 
     //Fetch data according to per_page limit.
