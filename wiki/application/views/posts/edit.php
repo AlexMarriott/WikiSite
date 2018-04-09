@@ -1,5 +1,5 @@
 <?php echo validation_errors(); ?>
-<?php echo form_open('posts/update'); ?>
+<?php echo form_open_multipart('posts/update'); ?>
 <input type="hidden" name="id" value="<?php echo $post_item['post_id']; ?>">
 <div class="form-group">
     <label for="title">Post Title</label>

@@ -7,10 +7,11 @@ class Posts extends CI_Controller
     {
         parent::__construct();
         //TODO, check to see if these can be autoloaded rather than loaded each time the file is called.
-        $this->load->model('Post_model');
+
+        /*$this->load->model('Post_model');
         $this->load->helper('url_helper');
         $this->load->library('session','upload');
-        $this->load->helper('cookie');
+        $this->load->helper('cookie');*/
     }
 
     public function index($offset = 0){
@@ -81,8 +82,8 @@ class Posts extends CI_Controller
             $config['upload_path'] = './assets/images/posts';
             $config['allowed_types'] = 'png|jpg';
             $config['max_size'] = '2048';
-            $config['max_width'] = '1024';
-            $config['max_height'] = '768';
+            $config['max_width'] = '2000';
+            $config['max_height'] = '2000';
 
 
             $this->upload->initialize($config);
@@ -91,6 +92,7 @@ class Posts extends CI_Controller
             if ( ! $this->upload->do_upload()) {
                 //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg
                 $post_image = 'default_image.jpg';
+                $error = array('error' => $this->upload->display_errors());
             } else {
                 $data = array(
                     'upload_data' => $this->upload->data());
@@ -105,6 +107,7 @@ class Posts extends CI_Controller
             } else {
                 $this->Post_model->create_rating();
                 $this->session->set_flashdata('post_created', 'The Post was create successfully!');
+                $this->session->set_flashdata('image_upload_failed',$error['error']);
                 redirect('posts');
             }
         }

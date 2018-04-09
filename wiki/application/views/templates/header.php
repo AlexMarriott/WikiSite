@@ -128,6 +128,10 @@
     <?php if ($this->session->flashdata('login_to_view_account')):?>
         <?php echo '<p class="alert alert-warning">'.$this->session->flashdata('login_to_view_account').'</p>';?>
     <?php endif; ?>
+    <!-- Flash messages warning-->
+    <?php if ($this->session->flashdata('image_upload_failed')):?>
+        <?php echo '<p class="alert alert-warning">'.$this->session->flashdata('image_upload_failed').'</p>';?>
+    <?php endif; ?>
 
 
 </div>
