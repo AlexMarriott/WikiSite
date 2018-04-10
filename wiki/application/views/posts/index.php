@@ -25,7 +25,8 @@
                             Sub-Category: <strong><?php echo $data['sub_category_name']; ?></strong></small>
                         <br>
                         <small class="user">By: <a href='<?php
-                            echo site_url('users/view/' . $data['user_id_FK']);?>'> <?php echo $data['user_name'];?></a></small>
+                            echo site_url('users/view/' . $data['user_id_FK']); ?>'> <?php echo $data['user_name']; ?></a>
+                        </small>
                         <br>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                   <button class="btn btn-secondary" type="submit">Search</button>
                 </span>
                     </div>
-                </form>
+                    </form>
                 </div>
             </div>
 
@@ -76,7 +77,8 @@
                         <div class="col-lg-6">
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/System Design">System Design</a>
+                                    <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/System Design">System
+                                        Design</a>
                                 </li>
                                 <li>
                                     <a href="http://student30371.bucomputing.uk/wiki/categories/subcategories/Hardware">Hardware</a>
@@ -96,32 +98,39 @@
                 </div>
             </div>
             <?php $logged_user = $this->session->userdata('user_id');
-             if (!empty($logged_user)):?>
-            <div class="card my-4 sidenav2">
-                <h5 class="card-header">User account view</h5>
-                <div class="card-body">
-                    <div class="row">
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled mb-0">
-                                                   <li>
-                                <a href=<?php echo site_url('users/view/' . $this->session->userdata('user_id')); ?>>View Posts</a>
-                            </li>
-                        </ul>
+            if (!empty($logged_user)):?>
+                <div class="card my-4 sidenav2">
+                    <h5 class="card-header">User account view</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <a href=<?php echo site_url('users/view/' . $this->session->userdata('user_id')); ?>>View
+                                            Posts</a>
+                                    </li>
+                                    <li>
+                                        <strong><?php echo "Total Posts: " . $post_count ?></strong>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li>
+                                        <strong><?php echo "User: ". $this->session->userdata('user_name'); ?></strong>
+                                    </li>
+                                    <li>
+                                        <strong><?php echo "Average Rating: " .  round($rating[0]['rating'],2); ?></strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <strong><?php echo $this->session->userdata('user_name');?></strong>
-                            </li>
-                        </ul>
-                    </div>
+
                 </div>
-            </div>
-
+            <?php endif; ?>
         </div>
-    <?php endif;?>
-    </div>
-    <!-- /.row -->
+        <!-- /.row -->
 
-</div>
-<!-- /.container -->
+    </div>
+    <!-- /.container -->

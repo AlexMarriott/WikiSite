@@ -34,7 +34,8 @@ class Posts extends CI_Controller
         $data['title'] = 'Top Rated Posts';
 
         $data['posts'] = $this->Post_model->get_posts(false, $config['per_page'], $offset);
-
+        $data['rating'] = $this->Post_model->get_avg_rating($this->session->userdata('user_id'));
+        $data['post_count'] = $this->Post_model->count_all_users_posts($this->session->userdata('user_id'));
         $this->load->view('templates/header');
         $this->load->view('posts/index', $data);
         $this->load->view('templates/footer');

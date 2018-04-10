@@ -21,7 +21,6 @@ class Post_model extends CI_Model
             $this->db->order_by('post_date','DESC');
             $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
             $this->db->join('users', 'users.user_id = posts.user_id_FK');
-            $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
             $query = $this->db->get('posts');
             return $query->result_array();
         }
@@ -147,6 +146,16 @@ class Post_model extends CI_Model
         return $query->row_array();
     }
 
+    public function get_avg_rating($user_id){
+        $this->db->select_avg('rating');
+        $this->db->from('post_ratings');
+        $this->db->join('posts', 'posts.post_id = post_ratings.post_id');
+        $this->db->join('users', 'users.user_id = posts.user_id_FK');
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function delete_post($post_id){
         $this->db->where('post_id', $post_id);
         $this->db->delete('posts');
@@ -176,8 +185,14 @@ class Post_model extends CI_Model
 
     public function count_all_users_posts($user_id)
     {
-        $query = $this->db->where('user_id_FK', $user_id)->get('posts');
-        return $query->num_rows();
+        if ($user_id === null){
+            return false;
+        }
+        $this->db->select('post_id');
+        $this->db->from('posts');
+        $this->db->join('users', 'users.user_id = posts.user_id_FK');
+        $this->db->where('user_id_FK', $user_id);
+        return $this->db->count_all_results();
     }
 
     //Fetch data according to per_page limit.
