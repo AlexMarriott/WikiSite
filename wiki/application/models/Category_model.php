@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * /*@author Alex Marriott s4816928,
+ * 10/4/2018.
+ * filename: Categories_model.php
+ * The Categories_model.php file is the model for the categories.
+ * This model has two functions, the creation of the sub_categories and the retrieval of the subcategories.
+ */
 class Category_model extends CI_Model
 {
 
@@ -19,7 +25,7 @@ class Category_model extends CI_Model
         return $this->db->insert('sub_categories', $data);
     }
 
-    public function get_category($sub_category_name){
+    public function get_sub_category($sub_category_name){
         $query = $this->db->get_where('sub_categories', array('sub_category_name' => $sub_category_name));
 
         return $query->row();

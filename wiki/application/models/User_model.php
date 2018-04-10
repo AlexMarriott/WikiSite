@@ -1,10 +1,16 @@
 <?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 10/4/2018.
+ * filename: user_model.php
+ * The user_model.php is the model for the user controller.
+ * This model deals with all the database interactions as well as using the password_verify function to check the users password against the password stored in the database.
+ */
 
     class User_model extends CI_Model{
 
+        //inserts the new user account.
         public function register($enc_password){
-            // user data array
-
             $data = array(
                 'email_address' => $this->input->post('email_address'),
                 'account_password' => $enc_password,
@@ -18,6 +24,7 @@
             }
 
         }
+        //checks the users details with the password in the database.
         public function login($username, $password)
         {
             $this->db->where("user_name", $username);
@@ -32,6 +39,7 @@
             }
         }
 
+        //used for setting the users session data.
         public function get_user_id($username){
         $this->db->where('user_name', $username);
         $query = $this->db->get_where('users', 'user_id');
@@ -39,11 +47,11 @@
 
     }
 
-    public function get_user($user_id){
+    /*public function get_user($user_id){
             $this->db->where('user_id', $user_id);
         $result = $this->db->get('users');
         return $result->row(0)->user_id;
-    }
+    }*/
 
         //Callback function which allows us to check if the username is unique and not already in the database.
         //unique has also been put under the username column within the database to prevent duplication in the usernames.

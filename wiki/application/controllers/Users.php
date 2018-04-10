@@ -1,17 +1,25 @@
 <?php
-
+/*
+ * /*@author Alex Marriott s4816928,
+ * 10/4/2018.
+ * filename: users.php
+ * The users.php is the user controller which deals with all the users logins, registrations and the users data.
+ * The user_model is the model for this controller and deals with the database connections.
+ *
+ */
     class Users extends CI_Controller{
 
+        //This function checks the registering users details and enforces rules and handles the password hashing of Bcrpyt, which is then stored in the database.
         public function register(){
 
             $this->load->helper('form');
             $this->load->library('form_validation');
             $data['title'] = 'Sign Up';
 
-
+            // checks that
             $this->form_validation->set_rules('user_name', 'Username', 'required|callback_check_username_exists');
             $this->form_validation->set_rules('email_address', 'Email', 'required|callback_check_email_address_exists');
-            $this->form_validation->set_rules('account_password', 'Password', 'required');
+            $this->form_validation->set_rules('account_password', 'Password', 'trim|required|min_length[8]|callback_account_password_check');
             $this->form_validation->set_rules('account_password2', 'Confirm Password', 'matches[account_password]');
 
             if($this->form_validation->run() === false){
@@ -24,12 +32,13 @@
                 $password = $this->input->post('account_password');
                 $enc_password = password_hash($password,PASSWORD_BCRYPT);
 
-                if ($this->User_model->register($enc_password)){
-                        $user_data = array('user_id' => $this->User_model->get_user_id($username),
+                //if the registerion is successful, the userdata is then set in the current session.
+                if ($this->user_model->register($enc_password)){
+                        $user_data = array('user_id' => $this->user_model->get_user_id($username),
                             'user_name' => $username,
                             'logged_in' => true);
                         $this->session->set_userdata($user_data);
-                    //setting message
+                    //setting flash message
                     $this->session->set_flashdata('user_registered', 'Account creation completed!');
                     redirect('posts');
 
@@ -40,35 +49,59 @@
                 }
             }
         }
+        //call back function to check the password being passed in.
+        public function account_password_check($str){
+            $uppercase = preg_match('@[A-Z]@', $str);
+            $lowercase = preg_match('@[a-z]@', $str);
+            $number    = preg_match('@[0-9]@', $str);
+            if(!$uppercase || !$lowercase || !$number || strlen($str) < 8) {
+                $this->form_validation->set_message('account_password_check', 'The password does not match the required format. Please enter a password longer than 8 charectes with an Uppercase, lowercase and a number.');
+                return false;
+            }
+            return true;
+        }
+        //call back function to check the username being passed in.
+        public function check_username_exists($username){
+            if($this->user_model->check_username_exists($username)){
+                return true;
+            } else {
+                $this->form_validation->set_message('check_username_exists', 'Username is currently in use.... please try another one');
+                return false;
+            }
+        }
+        //call back function to check the email being passed in.
+        public function check_email_address_exists($email_address){
+            if($this->user_model->check_email_address_exists($email_address)){
+                return true;
+            } else {
+                $this->form_validation->set_message('check_email_address_exists', 'Email is currently in use.... please try another one');
+                return false;
+            }
+        }
+
+
+        //login function which enforces rules on the min_length of the username and password. Sets the userdata for the session if the login is successful.
         public function login(){
-
-
-            /* taken from the old site
-            $uppercase = preg_match('@[A-Z]@', $password);
-            $lowercase = preg_match('@[a-z]@', $password);
-            $number    = preg_match('@[0-9]@', $password);
-            /(\d[0-9]|\d)/
-            */
-
             $this->load->helper('form');
             $this->load->library('form_validation');
             $data['title'] = 'Sign In';
 
-            $this->form_validation->set_rules('user_name', 'Username', 'required');
-            $this->form_validation->set_rules('account_password', 'Password', 'required');
+            $this->form_validation->set_rules('user_name', 'Username', 'trim|required|min_length[4]');
+            $this->form_validation->set_rules('account_password', 'Password', 'trim|required|min_length[8]');
 
             if($this->form_validation->run() === false){
                 $this->load->view('templates/header');
                 $this->load->view('users/login', $data);
                 $this->load->view('templates/footer');
             }else{
-                $username = $this->input->post(strip_tags(ltrim(rtrim('user_name'))));
-                $password = $this->input->post(strip_tags(ltrim(rtrim('account_password'))));
+                $username = $this->input->post('user_name');
+                $password = $this->input->post('account_password');
 
-                $user_id = $this->User_model->login($username,$password);
+                $user_id = $this->user_model->login($username,$password);
 
                 if($user_id){
-                    $user_data = array('user_id' => $user_id,
+                    $user_data = array(
+                        'user_id' => $user_id,
                         'user_name' => $username,
                         'logged_in' => true);
 
@@ -80,14 +113,14 @@
                     $this->session->set_flashdata('failed_login', 'Incorrect username or password!');
                     redirect('users/login');
                 }
-                //setting message
             }
         }
 
+        //This function allows the posts to be filtered via the user_id.
         public function view($user_id, $offset = 0){
 
             $config['base_url'] = base_url().'posts/index/';
-            $config['total_rows'] = $this->Post_model->count_all_users_posts($user_id);
+            $config['total_rows'] = $this->post_model->count_all_users_posts($user_id);
             $config['per_page'] = 5;
             $config['url_segment'] = 3;
             $config['full_tag_open'] = '<div class="pagination justify-content-center mb-4">';
@@ -100,7 +133,7 @@
 
             $config['full_tag_open'] = '<div class="pagination">';
 
-            $data['posts'] = $this->Post_model->get_posts(true, $config['per_page'], $offset, $user_id);
+            $data['posts'] = $this->post_model->get_posts(true, $config['per_page'], $offset, $user_id);
             $data['title'] = 'Users posts';
 
             $this->load->view('templates/header');
@@ -108,29 +141,18 @@
             $this->load->view('templates/footer');
         }
 
+        //unsets all the users data on logout.
         public function logout(){
             $this->session->unset_userdata('logged_in');
             $this->session->unset_userdata('user_id');
             $this->session->unset_userdata('user_name');
+            $this->session->unset_userdata('rating');
+            $this->session->unset_userdata('post_count');
+
 
             $this->session->set_flashdata('user_logged_out', 'You are now logged out.');
             redirect('posts/');
 
         }
-        public function check_username_exists($username){
-            $this->form_validation->set_message('check_username_exists', 'Username is currently in use.... please try another one');
-            if($this->User_model->check_username_exists($username)){
-                return true;
-            } else {
-                return false;
-            }
-        }
-        public function check_email_address_exists($email_address){
-            $this->form_validation->set_message('check_email_address_exists', 'Email is currently in use.... please try another one');
-            if($this->User_model->check_email_address_exists($email_address)){
-                return true;
-            } else {
-                return false;
-            }
-        }
+
     }

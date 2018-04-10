@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * /*@author Alex Marriott s4816928,
+ * 10/4/2018.
+ * filename: post_model.php
+ * The post_model.php file is the model for the post controller.
+ * It handles all the databases connections for the Post controller and does the data retrieval, inserts, updates and deletion for everything related to posts.
+ */
 class Post_model extends CI_Model
 {
 
@@ -13,6 +19,7 @@ class Post_model extends CI_Model
         details to the main index.php/view.php of the post controller */
     public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE, $user_id = FALSE)
     {
+        //The limiter is related to the pagination configuration which, sets the main website to only display 5 posts at one time.
         if($limit){
             $this->db->limit($limit, $offset);
         }
@@ -69,7 +76,7 @@ class Post_model extends CI_Model
 
     }
 
-    //Gets and returns a specific sub_category if the $slug s not null, otherwise it will return all the sub-categories.
+    //Gets and returns a specific sub_category if the $slugs not null, otherwise it will return all the sub-categories.
     public function get_sub_categories($slug = null){
         if ($slug === null){
             $this->db->order_by('sub_category_name');
@@ -90,6 +97,7 @@ class Post_model extends CI_Model
     }
 
 
+    //This is the database inaction for creating a post, it strips some of the users inputs and then inserts into the posts table.
     public function create_post($post_image)
     {
         $this->load->helper('url');
@@ -101,6 +109,7 @@ class Post_model extends CI_Model
         if ($post_image == null){
             $post_image = 'default_image.jpg';
         }
+
 
         $data = array(
             'post_title' => $this->input->post(strip_tags(ltrim(rtrim('title')))),
@@ -114,6 +123,7 @@ class Post_model extends CI_Model
 
         return $this->db->insert('posts', $data);
     }
+    //This function is ran after the above post creation to give the post a rating and insert it into the post_ratings table.
     public function create_rating()
     {
         $this->load->helper('url');
@@ -127,6 +137,7 @@ class Post_model extends CI_Model
         return $this->db->insert('post_ratings', $data);
     }
 
+    //This function inserts a rating into the post_rating table depending on what rating the user gave the post.
     public function rate_post($post_id, $rating){
 
         $query = array(
@@ -137,7 +148,8 @@ class Post_model extends CI_Model
         return $this->db->insert('post_ratings', $query);
     }
 
-    public function get_avg_rating_of_post($post_id = null){
+    //Function returns the average rating of  the users post
+    public function get_avg_rating_of_post($post_id){
 
         $this->db->select_avg('rating');
         $this->db->from('post_ratings');
@@ -146,6 +158,7 @@ class Post_model extends CI_Model
         return $query->row_array();
     }
 
+    //Gets the average rating of all the users total posts.
     public function get_avg_rating($user_id){
         $this->db->select_avg('rating');
         $this->db->from('post_ratings');
@@ -163,7 +176,9 @@ class Post_model extends CI_Model
     }
     public function update_post($post_image ){
         $slug = url_title($this->input->post('title'), 'dash', true);
-
+        if ($post_image == null){
+            $post_image = 'default_image.jpg';
+        }
 
         $data = array(
             'post_title' => $this->input->post('title'),
@@ -177,12 +192,8 @@ class Post_model extends CI_Model
 
     }
 
-    public function comment_count()
-    {
-        return $this->db->count_all("comments");
-    }
 
-
+    //Counts the users posts, returns them to the index page.
     public function count_all_users_posts($user_id)
     {
         if ($user_id === null){
@@ -195,33 +206,4 @@ class Post_model extends CI_Model
         return $this->db->count_all_results();
     }
 
-    //Fetch data according to per_page limit.
-    //https://www.sitepoint.com/pagination-with-codeigniter/
-    public function fetch_data($limit, $start)
-    {
-        $this->db->limit($limit, $start);
-        $query = $this->db->get("posts");
-
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row) {
-                $data[] = $row;
-            }
-            return $data;
-        }
-        return false;
-    }
-
-
-
-
-    /*public function get_users_posts($user_id){
-        $this->db->select('*');
-        $this->db->from('posts');
-        $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
-        $this->db->join('users', 'users.user_id = posts.user_id_FK');
-        $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
-        $this->db->where('user_id', $user_id);
-        $query = $this->db->get('posts');
-        return $query->result_array();
-    }*/
 }

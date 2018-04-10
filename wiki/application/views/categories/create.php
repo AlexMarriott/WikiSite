@@ -5,7 +5,7 @@
 <?php echo form_open('categories/create'); ?>
     <div class="form-group">
         <label>Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Enter Name of a sub-category">
+        <input type="text" class="form-control" name="sub-category-field" placeholder="Enter Name of a sub-category">
     </div>
 <div class="form-group">
     <label for="sel1">Select a category:</label>

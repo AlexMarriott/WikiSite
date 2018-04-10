@@ -94,8 +94,8 @@
         <?php echo '<p class="alert alert-info">'.$this->session->flashdata('user_logged_out').'</p>';?>
     <?php endif; ?>
 
-    <?php if ($this->session->flashdata('categroy_created')):?>
-        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('categroy_created').'</p>';?>
+    <?php if ($this->session->flashdata('category_created')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('category_created').'</p>';?>
     <?php endif; ?>
 
     <?php if ($this->session->flashdata('post_created')):?>

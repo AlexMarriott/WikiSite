@@ -110,7 +110,7 @@
                                             Posts</a>
                                     </li>
                                     <li>
-                                        <strong><?php echo "Total Posts: " . $post_count ?></strong>
+                                        <strong><?php echo "Total Posts: " . $this->session->userdata('post_count') ?></strong>
                                     </li>
                                 </ul>
                             </div>
@@ -120,7 +120,7 @@
                                         <strong><?php echo "User: ". $this->session->userdata('user_name'); ?></strong>
                                     </li>
                                     <li>
-                                        <strong><?php echo "Average Rating: " .  round($rating[0]['rating'],2); ?></strong>
+                                        <strong>Average Rating: <?php foreach ($this->session->userdata('rating') as $rating): echo round($rating['rating'],2); endforeach; ?></strong>
                                     </li>
                                 </ul>
                             </div>

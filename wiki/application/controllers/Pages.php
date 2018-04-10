@@ -1,16 +1,20 @@
 <?php
+
+/*
+ * /*@author Alex Marriott s4816928,
+ * 10/4/2018.
+ * filename: Pages.php
+ * The Pages.php file is the controller for the static pages of the website, which currently is just the about page, but this could be used for emails,contact pages etc.
+ */
 class Pages extends CI_Controller {
-//https://www.sitepoint.com/pagination-with-codeigniter/
+
     public function __construct() {
         parent::__construct();
-        $this->load->model('Post_model');
-        $this->load->helper('url_helper');
-        $this->load->library('pagination','session');
     }
 
     public function view($web_page = 'home') {
         if ( ! file_exists(APPPATH.'views/pages/'.$web_page.'.php')) {
-            // Whoops, we don't have a page for that!
+            //If page doesn't exist
             show_404();
         }
         $this->load->view('templates/header');
