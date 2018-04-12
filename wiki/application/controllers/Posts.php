@@ -17,7 +17,6 @@ class Posts extends CI_Controller
     //This is the main page of the website which takes in a offset variable which filters the amount of posts on each page.
     public function index($offset = 0)
     {
-
         //configuring the pagination links below each page.
         $config['base_url'] = base_url() . 'posts/index/';
         $config['total_rows'] = $this->db->count_all('posts');
@@ -28,16 +27,55 @@ class Posts extends CI_Controller
         $config['num_tag_open'] = '<li>';
         $config['num_tag_close'] = '</li>';
 
+        $user_id = $this->input->post('user_id');
 
         $this->pagination->initialize($config);
 
+        $config['full_tag_open'] = '<div class="pagination">';
+
+            $data['title'] = 'Recent Posts';
+            $data['posts'] = $this->post_model->get_posts(false, $config['per_page'], $offset);
+
+
+        //This array gets the average rating of each users and the amount of posts they have submitted.
+        $user_stats = array(
+            'rating' => $this->post_model->get_avg_rating($this->session->userdata('user_id')),
+            'post_count' => $this->post_model->count_all_users_posts($this->session->userdata('user_id')));
+
+        $this->session->set_userdata($user_stats);
+
+        $this->load->view('templates/header');
+        $this->load->view('posts/index', $data);
+        $this->load->view('templates/footer');
+    }
+
+    //This is the users view of there posts which takes in a offset variable which filters the amount of posts on each page.
+    public function user_posts($user_id = 0, $offset = 0)
+    {
+        //configuring the pagination links below each page.
+        $config['base_url'] = base_url() . 'posts/user_posts/' . $user_id. '/';
+        $config['total_rows'] = $this->post_model->count_all_users_posts($user_id);
+        $config['per_page'] = 5;
+        $config['url_segment'] = 3;
+        $config['full_tag_open'] = '<div class="pagination justify-content-center mb-4">';
+        $config['full_tag_close'] = '</div>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        $this->pagination->initialize($config);
 
         $config['full_tag_open'] = '<div class="pagination">';
 
+        //If the user_id is null, the normal index page will be loaded with recent posts.
+        if ($user_id != 0){
+            //allows the user to view all there posts on one page.
+            $data['posts'] = $this->post_model->get_posts(true, $config['per_page'], $offset, $user_id);
+            $data['title'] = 'Users posts';
+        } else{
+            $data['title'] = 'Recent Posts';
+            $data['posts'] = $this->post_model->get_posts(false, $config['per_page'], $offset);
+        }
 
-        $data['title'] = 'Top Rated Posts';
-
-        $data['posts'] = $this->post_model->get_posts(false, $config['per_page'], $offset);
 
         //This array gets the average rating of each users and the amount of posts they have submitted.
         $user_stats = array(
@@ -105,10 +143,9 @@ class Posts extends CI_Controller
             if (!$this->upload->do_upload()) {
                 //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg <-- image used for  default
                 $post_image = 'default_image.jpg';
-                $error = $this->upload->display_errors();
+                $image_error = $this->upload->display_errors();
             } else {
-                $data = array(
-                    'upload_data' => $this->upload->data());
+                $image_success = $this->upload->data();
                 $post_image = $_FILES['userfile']['name'];
             }
 
@@ -120,7 +157,11 @@ class Posts extends CI_Controller
             } else {
                 $this->post_model->create_rating();
                 $this->session->set_flashdata('post_created', 'The Post was create successfully!');
-                $this->session->set_flashdata('image_upload_failed', strip_tags($error));
+                if (empty($image_error)){
+                    $this->session->set_flashdata('image_upload_successful', strip_tags($image_success));
+                } else{
+                    $this->session->set_flashdata('image_upload_failed', strip_tags($image_error));
+                }
                 redirect('posts');
             }
         }

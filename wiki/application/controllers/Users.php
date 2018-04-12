@@ -23,24 +23,54 @@
             $this->form_validation->set_rules('account_password2', 'Confirm Password', 'matches[account_password]');
 
             if($this->form_validation->run() === false){
+
                 $this->load->view('templates/header');
                 $this->load->view('users/register', $data);
                 $this->load->view('templates/footer');
             }else{
+
+                //Image upload.
+                $config['upload_path'] = './assets/images/users';
+                $config['allowed_types'] = 'png|jpg';
+                $config['max_size'] = '2048';
+                $config['max_width'] = '2000';
+                $config['max_height'] = '2000';
+
+                $this->upload->initialize($config);
+
+                if (!$this->upload->do_upload()) {
+                    //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg <-- image used for  default
+                    $user_image = 'user_image.png';
+                    $user_image_error = $this->upload->display_errors();
+                } else {
+                    $user_image_success = $this->upload->data();
+                    $user_image = $_FILES['userfile']['name'];
+                }
+
                 //encrypting the password
                 $username = $this->input->post('user_name');
                 $password = $this->input->post('account_password');
                 $enc_password = password_hash($password,PASSWORD_BCRYPT);
 
-                //if the registerion is successful, the userdata is then set in the current session.
-                if ($this->user_model->register($enc_password)){
-                        $user_data = array('user_id' => $this->user_model->get_user_id($username),
-                            'user_name' => $username,
-                            'logged_in' => true);
-                        $this->session->set_userdata($user_data);
+                //If the registering is successful, the userdata is then set in the current session.
+                if ($this->user_model->register($enc_password,$user_image)){
+
+                    //creates an array which breaks most of the site so I'm doing it this way, sorry.
+                    $user_id = $this->user_model->get_user_id($username);
+
+                    $this->session->set_userdata('user_id' , $user_id['user_id']);
+                    $this->session->set_userdata('user_name' , $username);
+                    $this->session->set_userdata('logged_in' , true);
+
                     //setting flash message
                     $this->session->set_flashdata('user_registered', 'Account creation completed!');
+                    if (empty($user_image_error)){
+                        $this->session->set_flashdata('image_upload_successful', strip_tags($user_image_success));
+                    } else{
+                        $this->session->set_flashdata('image_upload_failed', strip_tags($user_image_error));
+                    }
                     redirect('posts');
+
 
                 }else{
                     $this->session->set_flashdata('generic_error', "Something went wrong... I'm not really sure what that was...
@@ -49,6 +79,8 @@
                 }
             }
         }
+
+
         //call back function to check the password being passed in.
         public function account_password_check($str){
             $uppercase = preg_match('@[A-Z]@', $str);
@@ -90,6 +122,7 @@
             $this->form_validation->set_rules('account_password', 'Password', 'trim|required|min_length[8]');
 
             if($this->form_validation->run() === false){
+                echo "blah";
                 $this->load->view('templates/header');
                 $this->load->view('users/login', $data);
                 $this->load->view('templates/footer');
@@ -99,14 +132,16 @@
 
                 $user_id = $this->user_model->login($username,$password);
 
-                if($user_id){
-                    $user_data = array(
-                        'user_id' => $user_id,
-                        'user_name' => $username,
-                        'logged_in' => true);
 
-                    $this->session->set_userdata($user_data);
+                if($user_id){
+                    $user_id = $this->user_model->get_user_id($username);
+
+                    $this->session->set_userdata('user_id' , $user_id['user_id']);
+                    $this->session->set_userdata('user_name' , $username);
+                    $this->session->set_userdata('logged_in' , true);
+
                     $this->session->set_flashdata('user_logged_in', 'You are now logged into the server!');
+                    echo "blah";
                     redirect('posts');
 
                 }else{
@@ -116,32 +151,71 @@
             }
         }
 
-        //This function allows the posts to be filtered via the user_id.
-        public function view($user_id, $offset = 0){
+        public function user_account(){
+        //This function changes the user account details, I have commented out the functional parts since I don't tend to make this work for the hand in.
+                $this->load->helper('form');
+                $this->load->library('form_validation');
+                $user_id = $this->uri->segment(3);
+                // checks that
+                $this->form_validation->set_rules('email_address', 'Email', 'callback_check_email_address_exists');
+                $this->form_validation->set_rules('account_password', 'Password', 'trim|min_length[8]|callback_account_password_check');
+                $this->form_validation->set_rules('account_password2', 'Confirm Password', 'matches[account_password]');
 
-            $config['base_url'] = base_url().'posts/index/';
-            $config['total_rows'] = $this->post_model->count_all_users_posts($user_id);
-            $config['per_page'] = 5;
-            $config['url_segment'] = 3;
-            $config['full_tag_open'] = '<div class="pagination justify-content-center mb-4">';
-            $config['full_tag_close'] = '</div>';
-            $config['num_tag_open'] = '<li>';
-            $config['num_tag_close'] = '</li>';
+                if($this->form_validation->run() === false){
+                    $data['user_info'] = $this->user_model->get_user_details($user_id);
+                    $this->load->view('templates/header');
+                    $this->load->view('users/user_account', $data);
+                    $this->load->view('templates/footer');
+                }
+                /*else{
+                    //Image upload.
+                    $config['upload_path'] = './assets/images/users';
+                    $config['allowed_types'] = 'png|jpg';
+                    $config['max_size'] = '2048';
+                    $config['max_width'] = '2000';
+                    $config['max_height'] = '2000';
+
+                    $this->upload->initialize($config);
+
+                    if (!$this->upload->do_upload()) {
+                        //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg <-- image used for  default
+                        $user_image = 'user_image.png';
+                        $user_image_error = $this->upload->display_errors();
+                    } else {
+                        $user_image_success = $this->upload->data();
+                        $user_image = $_FILES['userfile']['name'];
+                    }
+
+                    $user_name = $this->post->input('user_name');
+                    $email_address = $this->post->input('email_address');
+
+                    //If the registering is successful, the userdata is then set in the current session.
+                    if ($this->user_model->update_details($user_name,$email_address,$user_image,$user_id)){
+                        //setting flash message
+                        $this->session->set_flashdata('user_account_updated', 'Account updated!');
+                        if (empty($user_image_error)){
+                            $this->session->set_flashdata('image_upload_successful', strip_tags($user_image_success));
+                        } else{
+                            $this->session->set_flashdata('image_upload_failed', strip_tags($user_image_error));
+                        }
+                        $data['user_info'] = $this->user_model->get_user_details($user_id);
+                        echo 'blah2';
+
+                        redirect('users/user_account/', $data);
 
 
-            $this->pagination->initialize($config);
+                    }else{
+                        $this->session->set_flashdata('generic_error', "Something went wrong... I'm not really sure what that was...
+                     Please contact the administrator if this issue persists.");
+                        $data['user_info'] = $this->user_model->get_user_details($user_id);
+                        echo 'blah1';
 
-            $config['full_tag_open'] = '<div class="pagination">';
+                        redirect('users/user_account', $data);
+                    }
+                }*/
+            }
 
-            $data['posts'] = $this->post_model->get_posts(true, $config['per_page'], $offset, $user_id);
-            $data['title'] = 'Users posts';
-
-            $this->load->view('templates/header');
-            $this->load->view('posts/index', $data);
-            $this->load->view('templates/footer');
-        }
-
-        //unsets all the users data on logout.
+        //Unsets all the users data on logout.
         public function logout(){
             $this->session->unset_userdata('logged_in');
             $this->session->unset_userdata('user_id');

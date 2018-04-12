@@ -1,3 +1,14 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: posts/index.php
+ * This is the posts/index page. This page is used as the main index page for the site. It shows all of the posts currently on the site.
+ * All of the pages on the site will be made up of a header template and a footer template.
+ */
+?>
+
+
 <!-- Page Content -->
 <div class="container">
 
@@ -25,7 +36,7 @@
                             Sub-Category: <strong><?php echo $data['sub_category_name']; ?></strong></small>
                         <br>
                         <small class="user">By: <a href='<?php
-                            echo site_url('users/view/' . $data['user_id_FK']); ?>'> <?php echo $data['user_name']; ?></a>
+                            echo site_url('users/user_account/' . $data['user_id_FK']); ?>'> <?php echo $data['user_name']; ?></a>
                         </small>
                         <br>
                     </div>
@@ -97,6 +108,7 @@
                     </div>
                 </div>
             </div>
+            <!-- if the user is logged into an account, they will see there account details as a side widget-->
             <?php $logged_user = $this->session->userdata('user_id');
             if (!empty($logged_user)):?>
                 <div class="card my-4 sidenav2">
@@ -106,8 +118,9 @@
                             <div class="col-lg-6">
                                 <ul class="list-unstyled mb-0">
                                     <li>
-                                        <a href=<?php echo site_url('users/view/' . $this->session->userdata('user_id')); ?>>View
+                                        <a href=<?php echo site_url('posts/user_posts/' . $this->session->userdata('user_id')); ?>>View
                                             Posts</a>
+                                        <input type="hidden" name="user_id" value="<?php echo $this->session->userdata('user_id'); ?>">
                                     </li>
                                     <li>
                                         <strong><?php echo "Total Posts: " . $this->session->userdata('post_count') ?></strong>

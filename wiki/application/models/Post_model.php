@@ -17,7 +17,7 @@ class Post_model extends CI_Model
 
     /*  This is the main get post function which brings back all the post
         details to the main index.php/view.php of the post controller */
-    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE, $user_id = FALSE)
+    public function get_posts($slug = FALSE, $limit = FALSE, $offset = FALSE, $user_id = 0)
     {
         //The limiter is related to the pagination configuration which, sets the main website to only display 5 posts at one time.
         if($limit){
@@ -33,7 +33,7 @@ class Post_model extends CI_Model
         }
 
         //If the user_id has been put through, then we are searching for all posts by that said user.
-        if ($user_id != FALSE){
+        if ($user_id != 0){
             $this->db->join('post_ratings', 'post_ratings.post_id = posts.post_id');
             $this->db->join('users', 'users.user_id = posts.user_id_FK');
             $this->db->join('sub_categories', 'sub_categories.sub_category_id = posts.sub_categories_FK');
@@ -203,7 +203,8 @@ class Post_model extends CI_Model
         $this->db->from('posts');
         $this->db->join('users', 'users.user_id = posts.user_id_FK');
         $this->db->where('user_id_FK', $user_id);
-        return $this->db->count_all_results();
+        $num_rows = $this->db->count_all_results();
+        return $num_rows;
     }
 
 }

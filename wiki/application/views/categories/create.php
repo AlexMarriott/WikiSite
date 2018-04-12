@@ -1,3 +1,12 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: categories/create.php
+ * This is the categories/create page. This is the page which is used for users to create there sub-categories.. This interacts with the categories controller.
+ */
+?>
+
 <h2><?php echo $title;?></h2>
 
 <?php echo validation_errors(); ?>

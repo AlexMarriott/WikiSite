@@ -1,3 +1,13 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: categories/index.php
+ * This is the categories/index page. This is the page which is used for users to select and search though both the available categories and sub-categories.
+ */
+?>
+
+
 <h1><?php echo $title; ?></h1>
 
 <ul class="list-group">

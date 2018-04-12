@@ -10,14 +10,32 @@
     class User_model extends CI_Model{
 
         //inserts the new user account.
-        public function register($enc_password){
+        public function register($enc_password,$user_image){
             $data = array(
                 'email_address' => $this->input->post('email_address'),
                 'account_password' => $enc_password,
                 'user_name' => $this->input->post('user_name'),
+                'user_image' => $user_image
             );
 
             if ($this->db->insert('users', $data)){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+
+        //updates the new user account.
+        public function update_details($user_name,$email_address,$user_image,$user_id){
+                $data = array(
+                    'email_address' => $email_address,
+                    'user_name' => $user_name,
+                    'user_image' => $user_image
+                );
+                $this->db->set($data);
+            $this->db->where('user_id', $user_id);
+            if ($this->db->replace('users', $data)){
                 return true;
             }else{
                 return false;
@@ -41,17 +59,18 @@
 
         //used for setting the users session data.
         public function get_user_id($username){
-        $this->db->where('user_name', $username);
-        $query = $this->db->get_where('users', 'user_id');
-        return $query->result_array();
+            $this->db->select('user_id');
+            $this->db->where('user_name', $username);
+            $query = $this->db->get('users');
+        return $query->row_array();
 
     }
 
-    /*public function get_user($user_id){
+    public function get_user_details($user_id){
             $this->db->where('user_id', $user_id);
         $result = $this->db->get('users');
-        return $result->row(0)->user_id;
-    }*/
+        return $result->row_array();
+    }
 
         //Callback function which allows us to check if the username is unique and not already in the database.
         //unique has also been put under the username column within the database to prevent duplication in the usernames.

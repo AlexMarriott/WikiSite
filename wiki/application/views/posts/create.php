@@ -1,3 +1,14 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: posts/create.php
+ * This is the posts/create page. This is the page which is used for users to create there post. This interacts with the post controller.
+ */
+?>
+
+
+
 <?php if (isset($error)) {
 echo '<div class="alert alert-danger" role="alert">' . var_dump($error). '</div>';
 }?>

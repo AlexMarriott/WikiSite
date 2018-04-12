@@ -17,7 +17,7 @@
         //Is the actual database function for inserting into the database.
         public function create_comment($post_id){
             $data = array(
-                'comment' => $this->input->post('comments'),
+                'comment' => $this->input->post('comment'),
                 'user_id_FK' => $this->session->userdata('user_id'),
                 'post_id_FK' => $post_id
             );
@@ -26,7 +26,12 @@
 
         //Gets all the comments for a post where the post_id passed through is the same as the FK in the comments table.
         public function get_comments($post_id){
-            $query = $this->db->get_where('comments', array('post_id_FK' =>$post_id));
+            $this->db->select('*');
+            $this->db->join('posts', 'posts.post_id = comments.post_id_FK');
+            $this->db->join('users', 'users.user_id = comments.user_id_FK');
+            $this->db->where('post_id', $post_id);
+            $query = $this->db->get('comments');
+
             return $query->result_array();
         }
 

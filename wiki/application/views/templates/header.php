@@ -1,11 +1,16 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: templates/header.php
+ * The header page is used for the header of all the pages on the website.
+ */
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php if (isset($_SESSION['success'])) {
-        echo '<div class="alert alert-success" role="alert">' . $_SESSION['success'] . '</div>';
-    }?>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -35,8 +40,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-left">
-            <!-- TODO using js, make the active page change when moving from different pages -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url();?>">Home
                     <span class="sr-only">(current)</span>
                 </a>
@@ -49,7 +53,8 @@
             </li>
         </ul>
             <ul class="navbar-nav ml-auto">
-                <?php if(!$this->session->userdata('logged_in')): ?>
+                <?php
+                if(!$this->session->userdata('logged_in')): ?>
                     <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>users/login">Login</a>
                 </li>
@@ -57,7 +62,10 @@
                     <a class="nav-link" href="<?php echo base_url();?>users/register">Register</a>
                 </li>
                 <?php endif; ?>
-                <?php if($this->session->userdata('logged_in')): ?>
+
+                <?php //If a user is logged in, the options for creating posts, creating sub-categories and other user related tasks are shown.
+
+                if($this->session->userdata('logged_in')): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo base_url();?>users/logout">Log out</a>
                 </li>
@@ -105,6 +113,15 @@
     <?php if ($this->session->flashdata('post_update')):?>
         <?php echo '<p class="alert alert-success">'.$this->session->flashdata('post_update').'</p>';?>
     <?php endif; ?>
+
+    <?php if ($this->session->flashdata('image_upload_successful')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('image_upload_successful').'</p>';?>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('user_account_updated')):?>
+        <?php echo '<p class="alert alert-success">'.$this->session->flashdata('user_account_updated').'</p>';?>
+    <?php endif; ?>
+
 
     <!-- Flash messages Failed-->
     <?php if ($this->session->flashdata('failed_login')):?>

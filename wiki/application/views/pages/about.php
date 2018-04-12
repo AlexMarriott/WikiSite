@@ -1,3 +1,14 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: pages/about.php
+ * This is the cpages/about page. This is the page which is used for general information about the site. It is currently the only page which interfaces with the page controller.
+ * Which is for static pages only.
+ */
+?>
+
+
 <!-- Page Content -->
 <div class="container">
 
@@ -13,21 +24,21 @@
             <h2 class="my-4">Our Team</h2>
         </div>
         <div class="col-lg-4 col-sm-6 text-center mb-4">
-            <img class="rounded-circle img-fluid d-block mx-auto" src="/wiki/assets/images/staff/alex1.jpg" alt="">
+            <img class="rounded-circle img-fluid d-block mx-auto" src="/wiki/assets/images/staff/alex1.jpg" alt="Staff image" height="200" width="200">
             <h3>Alex Marriott
                 <br><small>Web Designer</small>
             </h3>
             <br><p>He made the site!</p>
         </div>
         <div class="col-lg-4 col-sm-6 text-center mb-4">
-            <img class="rounded-circle img-fluid d-block mx-auto" src="/wiki/assets/images/staff/alex2.jpg" alt="">
+            <img class="rounded-circle img-fluid d-block mx-auto" src="/wiki/assets/images/staff/alex2.jpg" alt="Staff image" height="200" width="200">
             <h3>Alex Marriott<br>
                 <small>Database Admin</small>
             </h3>
             <p>He made the database!</p>
         </div>
         <div class="col-lg-4 col-sm-6 text-center mb-4">
-            <img class="rounded-circle img-fluid d-block mx-auto" src="/wiki/assets/images/staff/andreas1.jpg" alt="">
+            <img class="rounded-circle img-fluid d-block mx-auto" src="/wiki/assets/images/staff/andreas1.jpg" alt="Staff image" height="200" width="200">
             <h3>Andreas Neophytou<br>
                 <small>Intern</small>
             </h3>

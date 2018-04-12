@@ -35,6 +35,7 @@ class Comments extends CI_Controller {
             $data['title'] = $data['post_item']['post_title'];
             $data['post_rating'] = $this->post_model->get_avg_rating_of_post($data['post_item']['post_id']);
 
+
             $this->load->view('templates/header');
             $this->load->view('posts/view', $data);
             $this->load->view('templates/footer');

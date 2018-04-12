@@ -1,3 +1,12 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: posts/edit.php
+ * This is the posts/edit page. This is the page which is used for users to edit there post.
+ */
+?>
+
 <?php echo validation_errors(); ?>
 <?php echo form_open_multipart('posts/update'); ?>
 <input type="hidden" name="id" value="<?php echo $post_item['post_id']; ?>">
@@ -8,8 +17,7 @@
 </div>
 <div class="form-group">
     <label for="body">Post Text</label>
-    <textarea class="form-control" id="body" name="body" rows="'30" placeholder="Add Title"
-              value="<?php echo $post_item['post_body']; ?>"></textarea>
+    <textarea class="form-control" id="body" name="body" rows="'30" placeholder="Add Title"><?php echo $post_item['post_body']; ?></textarea>
 </div>
 <div class="form-group">
     <label for="picture-upload">File input</label>
