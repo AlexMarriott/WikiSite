@@ -24,7 +24,7 @@
                 <div class='card mb-4'>
                     <img class='card-img-top'
                          src="<?php echo site_url(); ?>assets/images/posts/<?php echo $data['post_image']; ?>"
-                         alt='Card image cap'>
+                         alt='Card image cap' height="450" width="300">
                     <div class='card-body'>
                         <h2 class='card-title'><?php echo $data['post_title']; ?></h2>
                         <p class='card-text'><?php echo word_limiter($data['post_body'], 25); ?></p>

@@ -1,5 +1,17 @@
+<?php
+/*
+ * /*@author Alex Marriott s4816928,
+ * 12/4/2018.
+ * filename: users/register.php
+ * The register page is the main page where users will create there accounts
+ */
+?>
+
 
 <h2><?php echo $title; ?></h2>
+<h2>Please make sure your password has  a lowercase, uppercase, a number and is longer than 8 characters long.
+<br>
+User names should be longer than 4 characters long.</h2>
 <?php echo validation_errors(); ?>
 
 <?php echo form_open_multipart('users/register'); ?>

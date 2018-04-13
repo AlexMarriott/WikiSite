@@ -32,7 +32,7 @@
           <hr>
 
           <!-- Preview Image -->
-          <img class="img-fluid rounded" src="<?php echo site_url(); ?>assets/images/posts/<?php echo $post_item['post_image']; ?>" alt="<?php echo $post_item['post_image']; ?>">
+          <img class="img-fluid rounded" src="<?php echo site_url(); ?>assets/images/posts/<?php echo $post_item['post_image']; ?>" alt="<?php echo $post_item['post_image']; ?>" height="400" width="600">
 
                     <hr>
 

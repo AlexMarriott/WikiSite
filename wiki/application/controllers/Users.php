@@ -122,7 +122,6 @@
             $this->form_validation->set_rules('account_password', 'Password', 'trim|required|min_length[8]');
 
             if($this->form_validation->run() === false){
-                echo "blah";
                 $this->load->view('templates/header');
                 $this->load->view('users/login', $data);
                 $this->load->view('templates/footer');

@@ -22,7 +22,7 @@
 
         //Deliveries the subcategories page and get all of the sub_categories.
         public function subcategories(){
-            $slug = $this->uri->segment(3);
+            $slug = urldecode($this->uri->segment(3));
             $data['title'] = 'Subcategories';
 
             $data['sub_categories'] = $this->post_model->get_sub_categories($slug);
@@ -56,6 +56,8 @@
         //supplies the data for the main index pages. This is used for when searching posts by a sub_category
         public function posts($sub_category_name){
 
+            //This is to ensure that spaces are taken into consideration when creating a name of a sub-category.
+            $sub_category_name = urldecode($sub_category_name);
             $data['title'] = $this->category_model->get_sub_category($sub_category_name)->sub_category_name;
             $data['sub_category_id'] = $this->category_model->get_sub_category($sub_category_name)->sub_category_id;
 

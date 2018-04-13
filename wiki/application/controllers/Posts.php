@@ -222,15 +222,21 @@ class Posts extends CI_Controller
 
 
         if (!$this->upload->do_upload()) {
-            //https://fthmb.tqn.com/U-x-js7YTZbjIpXk7jDQL8nUrj8=/3865x2576/filters:fill(auto,1)/illuminated-server-room-panel-660495303-5a24933d4e46ba001a771cd1.jpg
             $post_image = 'default_image.jpg';
+            $image_error = $this->upload->display_errors();
         } else {
+            $image_success = $this->upload->data();
             $post_image = $_FILES['userfile']['name'];
         }
 
         $slug = url_title($this->input->post('title'), 'dash', true);
         $this->post_model->update_post($post_image);
         $this->session->set_flashdata('post_update', 'The Post was updated!');
+        if (empty($image_error)){
+            $this->session->set_flashdata('image_upload_successful', strip_tags($image_success));
+        } else{
+            $this->session->set_flashdata('image_upload_failed', strip_tags($image_error));
+        }
         redirect('posts/view/' . $slug);
     }
 

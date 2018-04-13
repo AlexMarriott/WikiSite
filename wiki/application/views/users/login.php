@@ -2,8 +2,8 @@
 /*
  * /*@author Alex Marriott s4816928,
  * 12/4/2018.
- * filename: templates/header.php
- * The header page is used for the header of all the pages on the website.
+ * filename: users/login.php
+ * The login page is the main page for users to access the site.
  */
 ?>
 
