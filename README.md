@@ -19,4 +19,4 @@ The technology stack for this website is:
  ![Site Design](images/siteimage.png)
 
 ## View project
-[See the Floodit project on github!](https://github.com/AlexMarriott/floodit)
+[See the wikisite project on github!](https://github.com/AlexMarriott/WikiSite)
