@@ -8,3 +8,15 @@ The technology stack for this website is:
 * Code Igniter
 * Mysql
 * Javascript
+
+## MCV Design
+ ![MVC Design](images/MVC.png)
+ 
+## Database Design
+ ![Database desgin](images/database.png)
+ 
+## Site Design
+ ![Site Design](images/siteimage.png)
+
+## View project
+[See the Floodit project on github!](https://github.com/AlexMarriott/floodit)
