@@ -9,11 +9,8 @@ The technology stack for this website is:
 * Mysql
 * Javascript
 
-## MCV Design
- ![MVC Design](images/MVC.png)
- 
 ## Database Design
- ![Database desgin](images/database.png)
+ ![Database desgin ](images/database.png)
  
 ## Site Design
  ![Site Design](images/siteimage.png)
